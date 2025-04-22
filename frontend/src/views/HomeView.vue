@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+      Hola esta es la página Homeview aquí va el listado de pistas disponibles
   </main>
 </template>
