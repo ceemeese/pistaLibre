@@ -33,7 +33,7 @@
     <v-btn icon aria-label="Buscar">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <v-btn icon tag="router-link" :to="'/login'" aria-label="Iniciar sesión">
+    <v-btn icon tag="router-link" :to="'/auth'" aria-label="Iniciar sesión">
       <v-icon>mdi-login</v-icon>
     </v-btn>
   </v-app-bar>
@@ -63,7 +63,7 @@
 
       <!-- Acciones extra, como login -->
       <v-list-item
-        to="/login"
+        to="/auth"
         tag="router-link"
         link
       >

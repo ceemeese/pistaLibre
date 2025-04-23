@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Header from './components/AppHeader.vue'
-import Banner from './components/AppBanner.vue'
+
 
 
 </script>
@@ -9,8 +9,11 @@ import Banner from './components/AppBanner.vue'
 <template>
   <v-app>
     <Header />
-    <Banner />
-    <RouterView />
+
+    <v-main>
+      <RouterView />
+    </v-main>
+    
   </v-app>
 </template>
 

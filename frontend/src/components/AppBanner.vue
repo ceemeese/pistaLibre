@@ -1,41 +1,68 @@
 <template>
     <div class="banner-wrapper">
-      <v-img
+      <v-parallax
         :src="bannerImage"
-        height="400px"
         cover
         class="banner-img"
       >
-        <!-- Gradiente + contenido encima -->
         <div class="banner-overlay d-flex flex-column justify-center align-center text-center px-4">
-          <!--<h1 class="text-h4 text-white font-weight-bold">Bienvenido a PistaLibreApp</h1>
-          <p class="text-subtitle-1 text-white">Reserva tus pistas de forma rápida y sencilla</p>-->
+          <h1 class="text-h4 text-md-h2 text-lg-h1 text-white font-weight-bold">Pista Libre</h1>
+          <p class="text-body-1 text-md-subtitle-1 text-lg-h5 text-white">Reserva tus pistas de forma rápida y sencilla</p>
+          <v-btn class="elevation-4 rounded-xl mt-6" color="black">
+            Reserva
+          </v-btn>
         </div>
-      </v-img>
+      </v-parallax>
     </div>
   </template>
   
   <script setup lang="ts">
-    const bannerImage = new URL('@/assets/banner.png', import.meta.url).href
+    const bannerImage = new URL('@/assets/banner2.png', import.meta.url).href
   </script>
   
   <style scoped>
   .banner-wrapper {
-    position: relative;
     width: 100%;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
   }
   
   .banner-img {
-    position: relative;
+    height: 250px;
   }
   
   .banner-overlay {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
+    padding: 0 10px;
   }
+
+  @media (min-width: 1024px) {
+  .banner-wrapper {
+    height: 100vh;
+    width: 100vw; 
+    margin-left: calc(-50vw + 50%); 
+  }
+
+  .banner-img {
+    height: 100vh;
+  }
+
+  .banner-title {
+    font-size: 4rem;
+  }
+
+  .banner-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .banner-overlay {
+    padding: 0 50px;
+  }
+}
   </style>
   
