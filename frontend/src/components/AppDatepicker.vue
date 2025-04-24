@@ -1,7 +1,7 @@
 <template>
     
-  <v-container ref="datepickerSection">
-    <VueDatePicker 
+  <v-container >
+    <VueDatePicker ref="datepickerSection"
         v-model="date" 
         :start-time="startTime"
         :min-time="{ hours: 9, minutes: 0 }"
@@ -28,7 +28,7 @@
 
   const datepickerSection = ref<HTMLElement | null>(null);
 
-  function scrollTo() {
+  function scrollTo(this: { scrollTo: () => void; }) {
     datepickerSection.value?.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -39,6 +39,9 @@
   const date = ref();
   const startTime = ref({ hours: 9, minutes: 0 });
   const maxDate = computed(() => addDays(new Date(), 14));
+
+
+
 
 </script>
 
