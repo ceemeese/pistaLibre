@@ -16,18 +16,22 @@
 
 
 <script setup lang="ts">
+  import { ref, onMounted, nextTick } from 'vue'
   import Banner from '../components/AppBanner.vue'
   import Datepicker from '@/components/AppDatepicker.vue';
   import ListCourt from '@/components/AppListCourt.vue';
   import Resume from '../components/AppResume.vue';
 
-  import { ref } from 'vue'
-
   const datepickerRef = ref<HTMLElement | null>(null);
 
-  function scrollToDatepicker() {
-    datepickerRef.value?.scrollTo();
-  }
+  const scrollToDatepicker = async () => {
+    console.log('Evento recibido');
+    
+    await nextTick() 
+    datepickerRef.value?.scrollIntoView({ behavior: 'smooth' })
+}
+  
+
 
   const pistaSeleccionada = ref<string | null>('Pista 1')
   const reserva = ref({
