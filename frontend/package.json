@@ -16,10 +16,11 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@vuepic/vue-datepicker": "^11.0.2",
     "pinia": "^3.0.1",
     "v-calendar": "^3.1.2",
     "vue": "^3.5.13",
-    "vue-cal": "^4.10.2",
+    "vue-cal": "^5.0.1-rc.18",
     "vue-i18n": "^10.0.7",
     "vue-router": "^4.5.0",
     "vue-toastification": "^2.0.0-rc.5",
