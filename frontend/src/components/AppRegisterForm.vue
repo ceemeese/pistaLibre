@@ -1,6 +1,6 @@
 <template>
     <v-container >
-        <h1 class="text-h5 text-md-h3 mb-4 text-center mt-4">Registro</h1>
+        <h1 class="text-h5 text-md-h3 mb-6 mb-md-10 text-center mt-4 mt-md-10">Registro</h1>
         <form>
         <v-text-field
             v-model="state.name"
