@@ -1,5 +1,5 @@
 <template>
-    <v-footer class="text-center d-flex flex-column ga-2 py-2 py-md-4 mt-5 mt-md-10" color="black">
+    <v-footer class="text-center d-flex flex-column ga-2 py-2 py-md-4 mt-5 mt-md-10 shrink-0 flex-0-0-auto" color="black">
         
         <div class="d-flex ga-3 justify-center">
             <v-btn

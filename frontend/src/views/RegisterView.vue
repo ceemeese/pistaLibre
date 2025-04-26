@@ -1,7 +1,7 @@
 <template>
-
-    <RegisterForm />
-    
+    <v-container class="fill-height d-flex flex-column align-center justify-center">
+        <RegisterForm />
+    </v-container>
 </template>
 
 <script setup lang="ts">

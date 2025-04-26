@@ -8,14 +8,14 @@ import Footer from './components/AppFooter.vue'
 </script>
 
 <template>
-  <v-app>
+  <v-app class="d-flex flex-column min-h-screen">
     <Header />
 
-    <v-main>
+    <v-main class="flex-grow-1 d-flex flex-column fill-height">
       <RouterView />
     </v-main>
 
-    <Footer />
+    <Footer class="shrink-0"/>
     
   </v-app>
 </template>
