@@ -17,6 +17,7 @@ import App from './App.vue'
 import router from './router'
 
 
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -26,6 +27,7 @@ app.use(i18n)
 app.use(Toast, options)
 app.use(VCalendar, {})
 app.component('VueDatePicker', VueDatePicker);
+
 
 app.mount('#app')
 
