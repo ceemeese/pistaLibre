@@ -11,6 +11,12 @@
           <th class="text-left">
             Surname
           </th>
+          <th class="text-left">
+            Email
+          </th>
+          <th class="text-left">
+            Password
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +26,8 @@
         >
           <td>{{ user.name }}</td>
           <td>{{ user.surname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.password }}</td>
         </tr>
       </tbody>
     </v-table>
@@ -33,6 +41,8 @@
       id: number;
       name: string;
       surname: string;
+      email: string;
+      password: string;
   }
 
   const users = reactive(new Array<Users>())
@@ -46,7 +56,9 @@
         const usersInfo = data.map((d:Users) => ({
           id: d.id,
           name: d.name,
-          surname: d.surname
+          surname: d.surname,
+          email: d.email,
+          password: d.password,
         }))
         console.log('Datos registrados correctamente');
         users.push(... usersInfo)
