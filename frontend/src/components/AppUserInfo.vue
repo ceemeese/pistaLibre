@@ -1,6 +1,6 @@
 <template>
     <v-card class="pa-4" outlined>
-        <v-card-title>Datos de cliente</v-card-title>
+        <v-card-title>Datos personales</v-card-title>
         <v-card-text>
         <v-form @submit.prevent="putData" ref="form">
 

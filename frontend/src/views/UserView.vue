@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">perfil de usuario</h1>
+        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Perfil de usuario</h1>
         <Info @show-snackbar="showSnackbar"/>
         
     </v-container>
