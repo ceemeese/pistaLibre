@@ -142,6 +142,90 @@ app.delete('/courts/:id', (req, res) => {
 })
 
 
+//RESERVAS
+let reservations = [];
+
+function initReservations() {
+    for (let i = 0; i<2; i++) {
+        reservations.push({
+            id: i,
+            courtId: faker.number.int({ min: 1, max: 6 }),
+            userId: faker.helpers.arrayElement(users).id,
+            date: faker.date.soon({ days: 2 }).toISOString().split('T')[0], //formato YYYY-MM-DD
+            startTime: "17:00",
+            endTime: "18:00",
+            status: "confirmed"
+        })
+    }
+}
+
+
+app.get('/reservations', (req, res) => {
+    res.send(reservations)
+})
+
+
+
+app.get('/reservations/:id', (request, response) => {
+    console.log(`Reserva: ${request.params.id}`)
+
+    let result = reservations.filter(reservation => reservation.id === parseInt(request.params.id))
+
+    if (result.length === 1) {
+        response.send(result[0])
+    } else {
+        response.sendStatus(404)
+    }
+})
+
+
+app.put('/reservations/:id', (request, response) => {
+    console.log(`Reserva: ${request.params.id}`)
+
+    let result = reservations.filter(reservation => reservation.id === parseInt(request.params.id))
+
+    if (result.length === 1) {
+        // response.send(result[0])
+        // result = request.body
+        result[0].courtId = request.body.courtId
+        result[0].userId = request.body.userId
+        result[0].date = request.body.date
+        result[0].startTime = request.body.startTime
+        result[0].endTime = request.body.endTime
+        result[0].status = request.body.status
+        response.sendStatus(200)
+    } else {
+        response.sendStatus(404)
+    }
+})
+
+
+app.post('/reservations', (req, res) => {
+    let reservation = req.body
+    reservation.id = reservations.length > 0 ? Math.max(...reservations.map(r => r.id)) + 1 : 1;
+    console.log(`Reserva ${JSON.stringify(reservation)}`)
+    reservations.push(reservation)
+    res.sendStatus(201)
+})
+
+
+app.delete('/reservations/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const exists = reservations.some(r => r.id === id);
+
+    if (exists) {
+        reservations = reservations.filter(court => court.id !== id); 
+        res.sendStatus(204);
+    } else {
+        res.sendStatus(404);
+    }
+})
+
+
+
+
+//INIT
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
   })
@@ -149,8 +233,14 @@ app.get('/', (req, res) => {
   app.listen(port, () => {
       init()
       initCourts()
+      initReservations()
       console.log(`Example app listening on port ${port}`)
   })
+
+
+
+
+  
 
 
 
