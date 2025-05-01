@@ -60,26 +60,15 @@
   </template>
 
 <script setup lang="ts">
-  import { reactive } from 'vue'
-  import { useVuelidate } from '@vuelidate/core'
-  import { email, required } from '@vuelidate/validators'
+    import { reactive } from 'vue'
+    import { useVuelidate } from '@vuelidate/core'
+    import { email, required } from '@vuelidate/validators'
+    import { useUsersStore } from '@/stores/userStore';
+    import { initialState } from '@/types/state.ts';
+    import type { State } from '@/types/state.ts';
 
-    interface State {
-        name: string;
-        surname: string;
-        email: string;
-        password: string;
-    }
 
-    
-    const initialState: State = {
-        name: '',
-        surname: '',
-        email: '',
-        password: ''
-    }
-
-    //Variable reactiva
+    //Variable reactiva de state
     const state = reactive<State>({
         ...initialState,
     })
@@ -93,6 +82,32 @@
     }
 
     const v$ = useVuelidate(rules, state)
+    const store = useUsersStore()
+
+    async function submit () {
+        
+        v$.value.$touch()
+
+        if (v$.value.$invalid) {
+            console.log('Formulario no válido');
+            return;
+        }
+
+        const newUser = { 
+            name: state.name,
+            surname: state.surname,
+            email: state.email,
+            password: state.password,
+        }
+
+        try {
+            await store.addUser(newUser);
+            console.log('Usuario añadido correctamente')
+            clear()
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    }
 
     function clear () {
         v$.value.$reset()
