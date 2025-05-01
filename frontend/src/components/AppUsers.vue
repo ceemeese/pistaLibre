@@ -21,9 +21,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="user in users"
-          :key="user.name"
-        >
+          v-for="user in store.users" :key="user.id">
           <td>{{ user.name }}</td>
           <td>{{ user.surname }}</td>
           <td>{{ user.email }}</td>
@@ -35,43 +33,14 @@
 
 <script setup lang="ts">
 
-  import { reactive, onMounted } from 'vue';
+  import { onMounted } from 'vue';
+  import { useUsersStore } from '@/stores/userStore';
 
-  interface Users {
-      id: number;
-      name: string;
-      surname: string;
-      email: string;
-      password: string;
-  }
+  const store = useUsersStore();
 
-  const users = reactive(new Array<Users>())
-
-  function fetchAll() {
-
-    if (users.length === 0) {
-      fetch('http://localhost:3000/users') 
-      .then(response => response.json())
-      .then(data => {
-        const usersInfo = data.map((d:Users) => ({
-          id: d.id,
-          name: d.name,
-          surname: d.surname,
-          email: d.email,
-          password: d.password,
-        }))
-        console.log('Datos registrados correctamente');
-        users.push(... usersInfo)
-      })
-      .catch(error => {
-        console.log('Error en cargar usuarios:', error);
-      })
-    }
-    
-  }
 
   onMounted(() => {
-    fetchAll();
+    store.fetchAll();
   });
 
 </script>

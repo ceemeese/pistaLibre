@@ -14,12 +14,11 @@ let users = []
 function init() {
     for (let i = 0; i<15; i++) {
         users.push({
-            id: faker.number.int({ min: 0, max: 200 }),
+            id: 1 + i,
             name: faker.person.firstName(),
             surname: faker.person.lastName(),
             email: faker.internet.email(),
             password: faker.internet.password(),
-            avatarUrl: faker.image.avatar(),
             active: true
         })
     }
@@ -37,23 +36,22 @@ app.get('/users/:id', (request, response) => {
     if (result.length === 1) {
         response.send(result[0])
     } else {
-        response.sendStatus(404)
+        response.status(404)
     }
 })
 
 app.put('/users/:id', (request, response) => {
     console.log(`usuario: ${request.params.id}`)
 
-    let result = users.filter(user => user.id === parseInt(request.params.id))
+    const userId = parseInt(request.params.id)
+    const user = users.find(user => user.id === userId)
 
-    if (result.length === 1) {
+    if (user) {
         // response.send(result[0])
         // result = request.body
-        result[0].name = request.body.name
-        result[0].surname = request.body.surname
-        result[0].avatarUrl = request.body.avatarUrl
-        result[0].active = request.body.active
-        response.sendStatus(200)
+        user.email = request.body.email
+        user.password = request.body.password
+        response.status(200).json(result[0]);
     } else {
         response.sendStatus(404)
     }
@@ -61,9 +59,10 @@ app.put('/users/:id', (request, response) => {
 
 app.post('/users', (req, res) => {
     let user = req.body
+    user.id = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
     console.log(`usuario ${JSON.stringify(user)}`)
     users.push(user)
-    res.sendStatus(201)
+    res.status(201).json(user);
 })
 
 
