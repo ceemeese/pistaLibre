@@ -19,10 +19,10 @@ export const useCourtsStore = defineStore('courts', () => {
                     name: c.name,
                     indoor: c.indoor,
                     active: c.active
-                    }))
+                }))
 
-                    courts.push(... courtsInfo);
-                    console.log('Pistas registradas correctamente');
+                courts.push(... courtsInfo);
+                console.log('Pistas registradas correctamente');
 
             } catch (error) {
                 console.log('Error en cargar las pistas:', error);

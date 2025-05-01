@@ -1,4 +1,4 @@
-import { ref, computed, reactive } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import type { NewUser, User } from '@/types/user'
 
@@ -20,15 +20,16 @@ export const useUsersStore = defineStore('users', () => {
                     surname: d.surname,
                     email: d.email,
                     password: d.password,
-                    }))
+                }))
 
-                    users.push(... usersInfo);
-                    console.log('Datos registrados correctamente');
+                users.push(... usersInfo);
+                console.log('Datos registrados correctamente');
 
             } catch (error) {
                 console.log('Error en cargar usuarios:', error);
             }
         } 
+        
     }
 
 
@@ -51,7 +52,9 @@ export const useUsersStore = defineStore('users', () => {
         } catch (error) {
             console.log('Error:', error);
         }  
+
     }
+
 
 
     async function modifyUser (id:number, email:string, password:string) {
@@ -77,7 +80,9 @@ export const useUsersStore = defineStore('users', () => {
         } catch (error) {
            console.log('Error: ', error);
         }
+
     } 
+
 
 
     async function searchUser (id:number) {
@@ -94,6 +99,7 @@ export const useUsersStore = defineStore('users', () => {
         } catch (error) {
             console.log('Error: ', error);
         }
+        
     }
     
 
