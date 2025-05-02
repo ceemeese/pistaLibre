@@ -1,6 +1,7 @@
 import { reactive, ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { NewUser, User } from '@/types/user'
+import type { Form } from '@/types/form'
 
 export const useUsersStore = defineStore('users', () => {
 
@@ -106,8 +107,23 @@ export const useUsersStore = defineStore('users', () => {
     }
 
 
-    function login(user: User) {
-        loggedUser.value = user
+    function login(form:Form) {
+
+        console.log(form);
+        console.log(users);
+        
+        
+        const user = users.find( user => user.email === form.email && user.password === form.password)
+
+        if (user) {
+            loggedUser.value = user;
+            console.log(loggedUser);
+            
+            return true;
+        } else {
+            console.log('backend no encontrado');
+            return false;
+        }
     }
     
     function logout() {
