@@ -35,7 +35,6 @@
     </v-btn>
     <v-btn v-if="store.isAuthenticated" 
       icon tag="router-link" 
-      :to="'/'" 
       aria-label="Logout"
       @click="handleLogout">
       <v-icon>mdi-login</v-icon>
@@ -82,20 +81,26 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { computed, ref } from 'vue'
   import { useUsersStore } from '@/stores/userStore'
   import { useRouter } from 'vue-router'
   import { toast } from 'vue3-toastify'
+  import type { NavItems } from '@/types/nav'
 
   const store = useUsersStore()
   const router = useRouter()
 
   const drawer = ref(<boolean>false)
 
-  const items = [
-    { title: 'Home', to: '/', icon: 'mdi-home' },
-    { title: 'Iniciar sesión', to: '/login', icon: 'mdi-account' },
-  ]
+  const items = computed<NavItems[]>( () => {
+    return [
+      { title: 'Home', to: '/', icon: 'mdi-home' },
+
+      store.isAuthenticated
+      ? { title: 'Perfil', to: '/user', icon: 'mdi-account-circle' }
+      : { title: 'Iniciar sesión', to: '/login', icon: 'mdi-account' }
+    ]
+  })
 
 
   const handleLogout = () => {
@@ -103,8 +108,8 @@
     toast("Cerrando sesión", {
       type: "default",
       onClose: () => {
-        router.push("/")
         store.logout();
+        router.push("/")
       }
     })
       

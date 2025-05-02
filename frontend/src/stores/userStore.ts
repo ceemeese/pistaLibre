@@ -7,7 +7,11 @@ export const useUsersStore = defineStore('users', () => {
 
     const users = reactive(new Array<User>())
 
-    const loggedUser = ref<User | null>(null)
+    const storedUser = localStorage.getItem('loggedUser');
+    const loggedUser = ref<User | null>(storedUser 
+        ? JSON.parse(storedUser) as User 
+        : null)
+
     const isAuthenticated = computed(() => !!loggedUser.value)
 
 
@@ -118,7 +122,7 @@ export const useUsersStore = defineStore('users', () => {
         if (user) {
             loggedUser.value = user;
             console.log(loggedUser);
-            
+            localStorage.setItem('loggedUser', JSON.stringify(user));
             return true;
         } else {
             console.log('backend no encontrado');
@@ -128,10 +132,11 @@ export const useUsersStore = defineStore('users', () => {
     
     function logout() {
         loggedUser.value = null
+        localStorage.removeItem('loggedUser');
     }
     
 
 
 
-  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout}
+  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser}
 })

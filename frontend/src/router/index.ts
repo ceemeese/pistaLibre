@@ -25,6 +25,7 @@ const router = createRouter({
       path: '/user',
       name: 'user',
       component: UserView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/register',
@@ -40,26 +41,16 @@ const router = createRouter({
 })
 
 
-
-/*router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
 
   const store = useUsersStore();
-  // ...
-  // explicitly return false to cancel the navigation
-
-  console.log(`isAuthenticated: ${store.isAuthenticated}`);
-  console.log(`to: ${to.fullPath}`);
-  console.log(`from: ${from.fullPath}`);
-
-  if (to.path === '/login' || to.path === '/register') {
-    next() // rutas públicas
-  } else if (store.isAuthenticated) {
-    next() // dejar pasar
+  
+  if (to.meta.requiresAuth && !store.isAuthenticated) {
+    next({ name: 'login' });  
   } else {
-    next('/login') // redirigir si no está logueado
+    next();
   }
-})*/
-
+});
 
 
 export default router
