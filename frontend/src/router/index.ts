@@ -4,6 +4,7 @@ import AuthView from '@/views/AuthView.vue'
 import UserView from '@/views/UserView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
+import { useUsersStore } from '@/stores/userStore';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,5 +44,28 @@ const router = createRouter({
     }
   ],
 })
+
+
+
+/*router.beforeEach((to, from, next) => {
+
+  const store = useUsersStore();
+  // ...
+  // explicitly return false to cancel the navigation
+
+  console.log(`isAuthenticated: ${store.isAuthenticated}`);
+  console.log(`to: ${to.fullPath}`);
+  console.log(`from: ${from.fullPath}`);
+
+  if (to.path === '/login' || to.path === '/register') {
+    next() // rutas públicas
+  } else if (store.isAuthenticated) {
+    next() // dejar pasar
+  } else {
+    next('/login') // redirigir si no está logueado
+  }
+})*/
+
+
 
 export default router

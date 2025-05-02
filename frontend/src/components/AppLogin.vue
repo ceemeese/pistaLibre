@@ -33,6 +33,7 @@ const form = reactive<Form>({
 
 const handleSubmit = () => {
   // make api request
+  
   console.log(form);
 };
 </script>

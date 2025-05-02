@@ -1,11 +1,10 @@
 <template>
     <Banner @scrollToDatepicker="scrollToDatepicker"/>
-    <v-container>
-      <Stepper />
-      <Datepicker ref="datepickerRef" />
-      <ListCourt />
+    <v-container v-if="userStore.isAuthenticated">
+      <Datepicker ref="datepickerRef" v-if="userStore.isAuthenticated" @date-selected="onDateSelected" />
+      <ListCourt v-if="userStore.isAuthenticated && dateSelected" />
       <Resume
-      
+      v-if="userStore.isAuthenticated && dateSelected && pistaSeleccionada"
       :pista="pistaSeleccionada || 'Pista 1'"
       :reserva="reserva"
       @confirmar="confirmarReserva"
@@ -21,17 +20,28 @@
   import Datepicker from '@/components/AppDatepicker.vue';
   import ListCourt from '@/components/AppListCourt.vue';
   import Resume from '../components/AppResume.vue';
+  import { useUsersStore } from '@/stores/userStore'
+
+
+  //Variables
+  const userStore = useUsersStore()
 
   const datepickerRef = ref<HTMLElement | null>(null);
+  const dateSelected = ref<string | null>(null)
 
+  const onDateSelected = (date: string) => {
+    dateSelected.value = date
+  }
+
+
+  //Scroll de botón reservar a datepicker
   const scrollToDatepicker = async () => {
     console.log('Evento recibido');
     
     await nextTick() 
     datepickerRef.value?.scrollIntoView({ behavior: 'smooth' })
-}
+  }
   
-
 
   const pistaSeleccionada = ref<string | null>('Pista 1')
   const reserva = ref({
