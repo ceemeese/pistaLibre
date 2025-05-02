@@ -67,6 +67,8 @@
     import { useUsersStore } from '@/stores/userStore';
     import { initialState } from '@/types/state.ts';
     import type { State } from '@/types/state.ts';
+    import { toast } from "vue3-toastify";
+import router from '@/router';
 
 
     //Variable reactiva de state
@@ -104,9 +106,27 @@
         }
 
         try {
+
+            const isRegistered = store.users.some(u => u.email === state.email)
+            if(isRegistered) {
+                toast("Este correo ya está registrado", {
+                type: "error",
+                onClose: () => {
+                    clear()
+                },
+            });
+            throw new Error ('Este correo ya está registrado')
+            }
+
             await store.addUser(newUser);
             console.log('Usuario añadido correctamente')
-            clear()
+            toast("Usuario registrado correctamente", {
+                type: "success",
+                onClose: () => {
+                    clear()
+                    router.push("/login");
+                },
+            });
         } catch (error) {
             console.log('Error:', error);
         }
