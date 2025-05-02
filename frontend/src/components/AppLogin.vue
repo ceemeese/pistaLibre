@@ -13,6 +13,7 @@
             />
             <v-btn type="submit">Login</v-btn>
             </v-form>
+            <p class="mt-5">¿No tienes cuenta? <router-link to="/register">Regístrate aquí</router-link></p>
         </v-card>
     </v-container>
 </template>

@@ -12,6 +12,7 @@ export const useUsersStore = defineStore('users', () => {
         ? JSON.parse(storedUser) as User 
         : null)
 
+
     const isAuthenticated = computed(() => !!loggedUser.value)
 
 
