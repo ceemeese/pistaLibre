@@ -1,10 +1,18 @@
-import { reactive } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { NewUser, User } from '@/types/user'
+import type { Form } from '@/types/form'
 
 export const useUsersStore = defineStore('users', () => {
 
     const users = reactive(new Array<User>())
+
+    const storedUser = localStorage.getItem('loggedUser');
+    const loggedUser = ref<User | null>(storedUser 
+        ? JSON.parse(storedUser) as User 
+        : null)
+
+    const isAuthenticated = computed(() => !!loggedUser.value)
 
 
     async function fetchAll() {
@@ -99,11 +107,36 @@ export const useUsersStore = defineStore('users', () => {
         } catch (error) {
             console.log('Error: ', error);
         }
+
+    }
+
+
+    function login(form:Form) {
+
+        console.log(form);
+        console.log(users);
         
+        
+        const user = users.find( user => user.email === form.email && user.password === form.password)
+
+        if (user) {
+            loggedUser.value = user;
+            console.log(loggedUser);
+            localStorage.setItem('loggedUser', JSON.stringify(user));
+            return true;
+        } else {
+            console.log('backend no encontrado');
+            return false;
+        }
+    }
+    
+    function logout() {
+        loggedUser.value = null
+        localStorage.removeItem('loggedUser');
     }
     
 
 
 
-  return { users, fetchAll, addUser, modifyUser, searchUser }
+  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser}
 })

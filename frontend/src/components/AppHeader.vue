@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="black" dark>
-    <!-- Menú hamburguesa SOLO en móviles -->
+    <!-- Menú hamburguesa en móviles -->
     <v-app-bar-nav-icon
       class="d-sm-none"
       @click="drawer = !drawer"
@@ -13,7 +13,7 @@
 
     <v-spacer />
 
-    <!-- Menú de navegación en escritorio -->
+    <!-- Menú escritorio -->
     <div class="d-none d-sm-flex">
       <v-btn
         v-for="item in items"
@@ -29,11 +29,14 @@
       </v-btn>
     </div>
 
-    <!-- Acciones universales -->
+    <!-- Acciones -->
     <v-btn icon aria-label="Buscar">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <v-btn icon tag="router-link" :to="'/auth'" aria-label="Iniciar sesión">
+    <v-btn v-if="store.isAuthenticated" 
+      icon tag="router-link" 
+      aria-label="Logout"
+      @click="handleLogout">
       <v-icon>mdi-login</v-icon>
     </v-btn>
   </v-app-bar>
@@ -52,6 +55,7 @@
         :to="item.to"
         tag="router-link"
         link
+        @click="drawer = false"
       >
         <template #prepend>
           <v-icon>{{ item.icon }}</v-icon>
@@ -61,28 +65,53 @@
 
       <v-divider class="my-2" />
 
-      <!-- Acciones extra, como login -->
+      <!-- Acciones logout en drawer-->
       <v-list-item
-        to="/auth"
-        tag="router-link"
+        v-if="store.isAuthenticated"
         link
+        @click="() => { handleLogout(); drawer = false; }"
       >
         <template #prepend>
           <v-icon>mdi-login</v-icon>
         </template>
-        <v-list-item-title>Iniciar sesión</v-list-item-title>
+        <v-list-item-title>Logout</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+  import { computed, ref } from 'vue'
+  import { useUsersStore } from '@/stores/userStore'
+  import { useRouter } from 'vue-router'
+  import { toast } from 'vue3-toastify'
+  import type { NavItems } from '@/types/nav'
 
-const drawer = ref(false)
+  const store = useUsersStore()
+  const router = useRouter()
 
-const items = [
-  { title: 'Inicio', to: '/', icon: 'mdi-home' },
-  { title: 'Usuario', to: '/user', icon: 'mdi-account' },
-]
+  const drawer = ref(<boolean>false)
+
+  const items = computed<NavItems[]>( () => {
+    return [
+      { title: 'Home', to: '/', icon: 'mdi-home' },
+
+      store.isAuthenticated
+      ? { title: 'Perfil', to: '/user', icon: 'mdi-account-circle' }
+      : { title: 'Iniciar sesión', to: '/login', icon: 'mdi-account' }
+    ]
+  })
+
+
+  const handleLogout = () => {
+    
+    toast("Cerrando sesión", {
+      type: "default",
+      onClose: () => {
+        store.logout();
+        router.push("/")
+      }
+    })
+      
+  }
 </script>
