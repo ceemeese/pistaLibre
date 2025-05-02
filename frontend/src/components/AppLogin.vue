@@ -23,6 +23,8 @@
   import router from "@/router";
   import { form } from "@/types/form";
   import { onMounted } from "vue";
+  import { toast } from "vue3-toastify";
+  
 
   const store = useUsersStore();
 
@@ -30,27 +32,40 @@
         store.fetchAll();
     });
 
+
+
   const handleSubmit = async () => {
 
     try {
       const success =  await store.login(form)
 
       if (success) {
-      setTimeout(() => {
-        router.push('/');
-      }, 3000);
+        toast("Inicio de sesión correcto", {
+          type: "success",
+          onClose: () => {
+            router.push("/");
+          },
+        });
     } else {
-      alert('Usuario o contraseña incorrectos');
-        
+        toast("Usuario o contraseña incorrectos", {
+          type: "error",
+          onClose: () => {
+            form.email = "";
+            form.password = "";
+          }
+        })
     }
+
     console.log(form);
 
     } catch (error) {
       console.log("Error: ", error);
-      alert('Error al intentar iniciar sesión')
+      toast.error("Error al intentar iniciar sesión")
     }
     
   };
+
+  
 </script>
 
 <style scoped>
