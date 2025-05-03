@@ -12,6 +12,17 @@ app.use(cors());
 let users = []
 
 function init() {
+
+    users.push({
+        id: 1,
+        name: 'Admin',
+        surname: 'Admin',
+        email: 'admin@admin.com',
+        password: 'admin',
+        active: true,
+        role: 'admin'
+    });
+
     for (let i = 0; i<15; i++) {
         users.push({
             id: 1 + i,
@@ -19,7 +30,8 @@ function init() {
             surname: faker.person.lastName(),
             email: faker.internet.email(),
             password: faker.internet.password(),
-            active: true
+            active: true,
+            role: 'user'
         })
     }
 }

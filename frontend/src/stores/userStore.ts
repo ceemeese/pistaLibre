@@ -14,6 +14,7 @@ export const useUsersStore = defineStore('users', () => {
 
 
     const isAuthenticated = computed(() => !!loggedUser.value)
+    const isAdmin = computed(() => loggedUser.value?.role === 'admin')
 
 
     async function fetchAll() {
@@ -29,6 +30,7 @@ export const useUsersStore = defineStore('users', () => {
                     surname: d.surname,
                     email: d.email,
                     password: d.password,
+                    role: d.role
                 }))
 
                 users.push(... usersInfo);
@@ -149,5 +151,5 @@ export const useUsersStore = defineStore('users', () => {
     }, { immediate: true });
 
 
-  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser}
+  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser, isAdmin}
 })

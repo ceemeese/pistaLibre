@@ -7,4 +7,7 @@ export interface NewUser {
 
 export interface User extends NewUser {
     id: number;
+    role: UserRole;
 }
+
+export type UserRole = 'admin' | 'user';

@@ -1,26 +1,22 @@
 <template>
     <v-container>
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Perfil de usuario</h1>
-        <Info @show-snackbar="showSnackbar"/>
+        <Info />
+        <NavAdmin v-if="store.isAdmin" />
+
+        
         
     </v-container>
 
-    <v-snackbar v-model="snackbar" :timeout="2000" location="top">
-            {{ snackbarMensaje }}
-        </v-snackbar>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
-    import Info from '../components/AppUserInfo.vue'
 
-    const snackbar = ref<boolean>(false);
-    const snackbarMensaje = ref<string>('');
+    import Info from '@/components/AppUserInfo.vue'
+    import NavAdmin from '@/components/AppAdminNav.vue'
+    import { useUsersStore } from '@/stores/userStore'
 
-    const showSnackbar = (mensaje: string) => {
-        snackbarMensaje.value = mensaje;
-        snackbar.value = true;
-    };
+    const store = useUsersStore();
 
 </script>
 
