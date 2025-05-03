@@ -14,7 +14,7 @@
         </v-btn>
   
       
-        <v-btn to="/users">
+        <v-btn to="/admin/courts">
           <v-icon>mdi-tennis</v-icon>
   
           Pistas
