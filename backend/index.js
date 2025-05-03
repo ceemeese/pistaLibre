@@ -47,11 +47,15 @@ app.put('/users/:id', (request, response) => {
     const user = users.find(user => user.id === userId)
 
     if (user) {
-        // response.send(result[0])
-        // result = request.body
-        user.email = request.body.email
-        user.password = request.body.password
-        response.status(200).json(result[0]);
+        const field = ['email', 'password']
+        field.forEach( field => {
+            if (request.body[field] !== undefined ) {
+                user[field] = request.body[field]
+            }
+        })
+        //user.email = request.body.email
+        //user.password = request.body.password
+        response.status(200).json(user);
     } else {
         response.sendStatus(404)
     }
