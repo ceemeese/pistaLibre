@@ -7,7 +7,7 @@
       >
 
         
-        <v-btn to="/users">
+        <v-btn to="/admin/users">
           <v-icon>mdi-account-circle</v-icon>
   
           Usuarios
