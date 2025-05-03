@@ -1,4 +1,4 @@
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { NewUser, User } from '@/types/user'
 import type { Form } from '@/types/form'
@@ -7,10 +7,11 @@ export const useUsersStore = defineStore('users', () => {
 
     const users = reactive(new Array<User>())
 
-    const storedUser = localStorage.getItem('loggedUser');
+    const storedUser = sessionStorage.getItem('loggedUser');
     const loggedUser = ref<User | null>(storedUser 
         ? JSON.parse(storedUser) as User 
         : null)
+
 
     const isAuthenticated = computed(() => !!loggedUser.value)
 
@@ -65,7 +66,7 @@ export const useUsersStore = defineStore('users', () => {
 
 
 
-    async function modifyUser (id:number, email:string, password:string) {
+    async function modifyUser (id:number | undefined, email?:string, password?:string) {
 
         try {
             const response = await fetch(`http://localhost:3000/users/${id}`, {
@@ -83,6 +84,11 @@ export const useUsersStore = defineStore('users', () => {
                     users[userModified] = { ...users[userModified], ...data};
                 }
 
+                if (loggedUser.value?.id === id) {
+                    loggedUser.value = { ...loggedUser.value, ...data };
+                }
+                console.log(loggedUser.value?.email);
+                
                 console.log('Usuario modificado correctamente: ', data);  
             }
         } catch (error) {
@@ -122,7 +128,7 @@ export const useUsersStore = defineStore('users', () => {
         if (user) {
             loggedUser.value = user;
             console.log(loggedUser);
-            localStorage.setItem('loggedUser', JSON.stringify(user));
+            sessionStorage.setItem('loggedUser', JSON.stringify(user));
             return true;
         } else {
             console.log('backend no encontrado');
@@ -132,10 +138,15 @@ export const useUsersStore = defineStore('users', () => {
     
     function logout() {
         loggedUser.value = null
-        localStorage.removeItem('loggedUser');
+        sessionStorage.removeItem('loggedUser');
     }
     
-
+    watch(() => loggedUser.value, (updatedUser) => {
+        if (updatedUser) {
+            sessionStorage.setItem('loggedUser', JSON.stringify(updatedUser))
+        }
+        
+    }, { immediate: true });
 
 
   return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser}

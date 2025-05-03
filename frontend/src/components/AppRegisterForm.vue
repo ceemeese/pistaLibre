@@ -2,59 +2,60 @@
     <v-container >
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Registro</h1>
         <v-card class="mx-auto px-6 py-8" max-width="350">
-            <form>
-            <v-text-field
-                v-model="state.name"
-                :counter="10"
-                :error-messages="v$.name.$errors.map(e => String(e.$message))"
-                label="Name"
-                required
-                @blur="v$.name.$touch"
-                @input="v$.name.$touch"
-                class="mb-2"
-            ></v-text-field>
+            <v-form>
+                <v-text-field
+                    v-model="state.name"
+                    :counter="10"
+                    :error-messages="v$.name.$errors.map(e => String(e.$message))"
+                    label="Name"
+                    required
+                    @blur="v$.name.$touch"
+                    @input="v$.name.$touch"
+                    class="mb-2"
+                ></v-text-field>
 
-            <v-text-field
-                v-model="state.surname"
-                :error-messages="v$.surname.$errors.map(e => String(e.$message))"
-                label="Apellidos"
-                required
-                @blur="v$.email.$touch"
-                @input="v$.email.$touch"
-                class="mb-2"
-            ></v-text-field>
-        
-            <v-text-field
-                v-model="state.email"
-                :error-messages="v$.email.$errors.map(e => String(e.$message))"
-                label="E-mail"
-                required
-                @blur="v$.email.$touch"
-                @input="v$.email.$touch"
-                class="mb-2"
-            ></v-text-field>
+                <v-text-field
+                    v-model="state.surname"
+                    :error-messages="v$.surname.$errors.map(e => String(e.$message))"
+                    label="Apellidos"
+                    required
+                    @blur="v$.email.$touch"
+                    @input="v$.email.$touch"
+                    class="mb-2"
+                ></v-text-field>
+            
+                <v-text-field
+                    v-model="state.email"
+                    :error-messages="v$.email.$errors.map(e => String(e.$message))"
+                    label="E-mail"
+                    required
+                    @blur="v$.email.$touch"
+                    @input="v$.email.$touch"
+                    class="mb-2"
+                ></v-text-field>
 
-            <v-text-field
-                v-model="state.password"
-                :error-messages="v$.password.$errors.map(e => String(e.$message))"
-                label="Contraseña"
-                required
-                @blur="v$.email.$touch"
-                @input="v$.email.$touch"
-                class="mb-2"
-            ></v-text-field>
-        
-        
-            <v-btn
-                class="me-4"
-                @click="v$.$validate"
-            >
-                Confirmar
-            </v-btn>
-            <v-btn @click="clear">
-                Limpiar
-            </v-btn>
-            </form>
+                <v-text-field
+                    v-model="state.password"
+                    type="password"
+                    :error-messages="v$.password.$errors.map(e => String(e.$message))"
+                    label="Contraseña"
+                    required
+                    @blur="v$.email.$touch"
+                    @input="v$.email.$touch"
+                    class="mb-2"
+                ></v-text-field>
+            
+            
+                <v-btn
+                    class="me-4"
+                    @click="submit"
+                >
+                    Confirmar
+                </v-btn>
+                <v-btn @click="clear">
+                    Limpiar
+                </v-btn>
+            </v-form>
         </v-card>
     </v-container>
   </template>
@@ -66,6 +67,8 @@
     import { useUsersStore } from '@/stores/userStore';
     import { initialState } from '@/types/state.ts';
     import type { State } from '@/types/state.ts';
+    import { toast } from "vue3-toastify";
+    import router from '@/router';
 
 
     //Variable reactiva de state
@@ -84,6 +87,8 @@
     const v$ = useVuelidate(rules, state)
     const store = useUsersStore()
 
+
+
     async function submit () {
         
         v$.value.$touch()
@@ -101,9 +106,27 @@
         }
 
         try {
+
+            const isRegistered = store.users.some(u => u.email === state.email)
+            if(isRegistered) {
+                toast("Este correo ya está registrado", {
+                    type: "error",
+                    onClose: () => {
+                        clear()
+                    },
+                });
+            throw new Error ('Este correo ya está registrado')
+            }
+
             await store.addUser(newUser);
             console.log('Usuario añadido correctamente')
-            clear()
+            toast("Usuario registrado correctamente", {
+                type: "success",
+                onClose: () => {
+                    clear()
+                    router.push("/login");
+                },
+            });
         } catch (error) {
             console.log('Error:', error);
         }
