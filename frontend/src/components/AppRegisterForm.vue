@@ -68,7 +68,7 @@
     import { initialState } from '@/types/state.ts';
     import type { State } from '@/types/state.ts';
     import { toast } from "vue3-toastify";
-import router from '@/router';
+    import router from '@/router';
 
 
     //Variable reactiva de state
@@ -110,11 +110,11 @@ import router from '@/router';
             const isRegistered = store.users.some(u => u.email === state.email)
             if(isRegistered) {
                 toast("Este correo ya está registrado", {
-                type: "error",
-                onClose: () => {
-                    clear()
-                },
-            });
+                    type: "error",
+                    onClose: () => {
+                        clear()
+                    },
+                });
             throw new Error ('Este correo ya está registrado')
             }
 

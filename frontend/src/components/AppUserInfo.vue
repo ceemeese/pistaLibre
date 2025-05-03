@@ -2,21 +2,34 @@
     <v-card class="pa-4" outlined>
         <v-card-title>Datos personales</v-card-title>
         <v-card-text>
-        <v-form @submit.prevent="putData" ref="form">
+        <v-form @submit.prevent="submit" ref="form">
 
             <div class="mb-4">
             <div class="text-subtitle-1 font-weight-medium">Nombre</div>
-            <div class="text-body-1">{{ cliente.nombre }}</div>
+            <div class="text-body-1">{{ name }}</div>
             </div>
    
             <v-text-field
             label="Correo electrónico"
-            v-model="cliente.email"
+            v-model="emailForm"
             :error-messages="v$.email.$errors.map(e => String(e.$message))"
             required
             outlined
             @blur="v$.email.$touch"
             @input="v$.email.$touch"
+            class="mb-4"
+            />
+
+            <v-text-field
+            label="Contraseña"
+            type="password"
+            name="password"
+            v-model="passwordForm"
+            :error-messages="v$.password.$errors.map(e => String(e.$message))"
+            required
+            outlined
+            @blur="v$.password.$touch"
+            @input="v$.password.$touch"
             class="mb-4"
             />
 
@@ -28,43 +41,62 @@
 </template>
   
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { reactive, ref, watch } from 'vue';
     import { useVuelidate } from '@vuelidate/core';
     import { required, email } from '@vuelidate/validators';
+    import { useUsersStore } from '@/stores/userStore';
+    import { toast } from 'vue3-toastify';
 
-    const emit = defineEmits<{
-    (e: 'show-snackbar', mensaje: string): void;
-    }>();
-  
- 
-    interface Cliente {
-        nombre: string;
-        email: string;
-    }
+    const store = useUsersStore();
   
     // Datos del cliente se traen del store
-    const cliente = ref<Cliente>({
-        nombre: 'Cristina Malmierca', 
-        email: 'cris@mail.com',
+    const name = ref(store.loggedUser?.name);
+    const emailForm = ref(store.loggedUser?.email);
+    const passwordForm = ref(store.loggedUser?.password);
+
+
+    const rules = reactive({
+        email: { required, email },
+        password: { required }
     });
 
-    const rules = {
-        email: { required, email }
-    }
+
+    const v$ = useVuelidate(rules, {email: emailForm, password: passwordForm})
 
 
-    const v$ = useVuelidate(rules, cliente)
 
-    const putData = () => {
+    async function submit () {
         
         if (v$.value.$invalid) {
             console.log("Formulario no válido");
             return;
         }
-        console.log('Guardando cambios...', cliente.value);
-        emit('show-snackbar', 'Datos actualizados correctamente');
         
-        //TODO actualizar datos    
+        try {
+            const isRegisteredByAnother = store.users.some(u => u.email === emailForm.value && u.id !== store.loggedUser?.id)
+
+            if(isRegisteredByAnother) {
+                toast("Este correo ya está registrado", {
+                    type: "error",
+                    onClose: () => {
+                        emailForm.value = store.loggedUser?.email;
+                    },
+                });
+            throw new Error ('Este correo ya está registrado')
+            }
+
+            await store.modifyUser(store.loggedUser?.id, emailForm.value, passwordForm.value);
+            console.log('Usuario modificado correctamente')
+            toast("Usuario modificado correctamente", {
+                type: "success",
+            });
+
+
+        } catch (error) {
+            console.log('Error: ', error);
+            
+        }
+        
     };
 
   </script>

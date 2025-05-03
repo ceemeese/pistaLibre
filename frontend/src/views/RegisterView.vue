@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height d-flex flex-column align-center justify-center">
+    <v-container class="fill-height d-flex flex-column align-center">
         <RegisterForm />
     </v-container>
 </template>
