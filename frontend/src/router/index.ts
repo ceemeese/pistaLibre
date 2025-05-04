@@ -20,6 +20,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/UsersView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
       path: '/admin/courts',
@@ -28,6 +29,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/CourtsView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
       path: '/admin/reservations',
@@ -36,6 +38,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ReservationsView.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true },
     },
     {
       path: '/user',
@@ -63,6 +66,8 @@ router.beforeEach((to, from, next) => {
   
   if (to.meta.requiresAuth && !store.isAuthenticated) {
     next({ name: 'login' });  
+  } else if (to.meta.requiresAdmin && to.meta.requiresAuth){
+    next({name: 'user'});
   } else {
     next();
   }
