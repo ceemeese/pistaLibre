@@ -48,8 +48,8 @@ export const useReservationsStore = defineStore('reservations', () => {
                 const data = await response.json();
     
                 if (response.ok) {
-                    const NewReservation = { ...data }
-                    reservations.push(NewReservation)
+                    const newReservation = { ...data }
+                    reservations.push(newReservation)
                     console.log('Reserva registrada correctamente:', data);
                 }
             } catch (error) {

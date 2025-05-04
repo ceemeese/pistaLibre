@@ -1,4 +1,4 @@
-<template>
+f<template>
     <v-layout class="overflow-visible mt-5" style="height: 56px;">
       <v-bottom-navigation
         v-model="value"
@@ -20,7 +20,7 @@
           Pistas
         </v-btn>
   
-        <v-btn to="/users">
+        <v-btn to="/admin/reservations">
           <v-icon>mdi-calendar</v-icon>
   
           Reservas

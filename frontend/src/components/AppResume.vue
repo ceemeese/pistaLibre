@@ -10,18 +10,15 @@
   
           <v-list dense class="text-center text-md-left">
             <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>Pista: {{ pista }}</v-list-item-title>
-                <v-list-item-title>Fecha: {{ reserva.fecha }}</v-list-item-title>
-                <v-list-item-title>Hora: {{ reserva.hora }}</v-list-item-title>
-                <v-list-item-title>Nombre: {{ cliente.nombre }}</v-list-item-title>
-                <v-list-item-title>Correo: {{ cliente.email }}</v-list-item-title>
-              </v-list-item-content>
+              <v-list-group>
+                <v-list-item-title>Pista:  </v-list-item-title>
+                <v-list-item-title>Fecha:  </v-list-item-title>
+              </v-list-group>
             </v-list-item>
           </v-list>
   
           
-          <v-form @submit.prevent="$emit('confirmar', cliente)">
+          <v-form>
             <v-row
               class="mt-4 pl-4"
               no-gutters
@@ -33,13 +30,13 @@
                 <v-btn
                     color="grey"
                     class="mr-2"
-                    @click="$emit('cancelar')"
+                    @click="cancel"
                 >
                     Cancelar
                 </v-btn>
                 <v-btn
                     color="primary"
-                    type="submit"
+                    @click="confirm"
                 >
                     Confirmar
                 </v-btn>
@@ -48,7 +45,7 @@
           </v-form>
         </v-col>
   
-       
+       <!--
         <v-col
           cols="12"
           md="6"
@@ -59,7 +56,7 @@
             :pista="pista"
             :reservas="reservasDia"
           />
-        </v-col>
+        </v-col>-->
   
       </v-row>
     </v-card>
@@ -67,28 +64,31 @@
   
   
   <script setup lang="ts">
-  import { ref } from 'vue'
+  
+  import type { Court } from '@/types/court';
   import CourtSchedule from './AppCourtSchedule.vue'
   
-  defineProps<{
-    pista: string
-    reserva: {
-      fecha: string
-      hora: string
-    }
+
+
+  //Propiedades recibidas del padre
+  const { dateSelected, courtSelected, selectedCourtObject } = defineProps<{
+      dateSelected: Date,
+      courtSelected: number
+      selectedCourtObject: Court | null
   }>()
   
-  defineEmits(['confirmar', 'cancelar'])
+
+
+  //Eventos emitidos al padre
+  const emit = defineEmits(['confirmReservation', 'cancelReservation'])
+
+  function confirm() {
+    emit('confirmReservation', )
+  }
+
+  function cancel() {
+    emit('cancelReservation')
+  }
   
-  const cliente = ref({
-    nombre: 'Cris',
-    email: 'cris@mail.com',
-  })
-  
-  const reservasDia = ref([
-    { hora: '10:30' },
-    { hora: '12:00' },
-    { hora: '18:30' },
-  ])
   </script>
   

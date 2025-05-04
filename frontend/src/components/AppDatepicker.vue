@@ -1,7 +1,8 @@
 <template>
     
   <v-container >
-    <VueDatePicker ref="datepickerSection"
+    <VueDatePicker 
+        ref="datepickerSection"
         v-model="date" 
         :start-time="startTime"
         :min-time="{ hours: 9, minutes: 0 }"
@@ -13,6 +14,7 @@
         :min-date="new Date()"
         :max-date="maxDate" 
         disable-year-select
+        @update:model-value="emitDate"
         />
   </v-container>
 
@@ -26,21 +28,34 @@
   import { ref, computed} from 'vue';
   import { addDays } from 'date-fns';
 
-  const datepickerSection = ref<HTMLElement | null>(null);
-
-  function scrollTo(this: { scrollTo: () => void; }) {
-    datepickerSection.value?.scrollIntoView({ behavior: 'smooth' });
-}
-
-  defineExpose({
-    scrollTo,
-  });
-
   const date = ref();
   const startTime = ref({ hours: 9, minutes: 0 });
   const maxDate = computed(() => addDays(new Date(), 14));
+  
 
 
+  /*const datepickerSection = ref<HTMLElement | null>(null);
+
+  function scrollTo(this: { scrollTo: () => void; }) {
+    datepickerSection.value?.scrollIntoView({ behavior: 'smooth' })
+  }*/
+
+
+
+  /*defineExpose({
+    scrollTo,
+  });*/
+
+
+  //evento seleccion fecha al padre
+  const emit  = defineEmits<{
+    (e: 'dateSelected', value: Date): void;
+  }>();
+
+  function emitDate(value: Date) {
+    console.log('Emite fecha el hijo')
+    emit('dateSelected', value)
+  }
 
 
 </script>
