@@ -14,8 +14,9 @@
       />
       
       <Resume
-        v-if="userStore.isAuthenticated && dateSelected && courtSelected"
+        v-if="userStore.isAuthenticated && dateSelected && courtSelected && endTime"
         :dateSelected="dateSelected"
+        :endTime="endTime"
         :courtSelected="courtSelected"
         :selectedCourtObject="selectedCourtObject"
         @confirm-reservation="confirmReservation"
@@ -34,6 +35,7 @@
   import { useUsersStore } from '@/stores/userStore'
   import type { Court } from '@/types/court';
   import { useCourtsStore } from '@/stores/courtStore';
+  import { add } from 'date-fns';
 
 
   //Variables
@@ -44,16 +46,19 @@
 
   const dateSelected = ref<Date| null>(null);
   const courtSelected = ref<number | null>(null);
-
+  const endTime = ref<Date | null>(null);
 
 
   const onDateSelected = (date: Date) => {
     console.log('Fecha recibida de componente hijo DatePicker: ', date);
     dateSelected.value = date;
+
+    //calcular la fecha final tras coger fecha inicio
+    addReservationTime();
   }
 
   const onCourtSelected = (courtId: number ) => {
-    console.log('Pista recibida de componente hijo ListCourt:', courtId)
+    console.log('Pista recibida de componente hijo ListCourt:', courtId);
     courtSelected.value = courtId;
   }
 
@@ -61,7 +66,7 @@
   const selectedCourtObject = computed<Court | null>(() => {
     const court = courtStore.courts.find(c => c.id === courtSelected.value)
     console.log('Objeto court seleccionado: ', court);
-    return court ?? null
+    return court ?? null;
   })
 
 
@@ -71,12 +76,21 @@
     console.log('Reserva confirmada desde componente hijo Resume:', {
       court: courtSelected.value,
     })
-    courtSelected.value = null
+    courtSelected.value = null;
   }
   //Evento cancelar reserva del Resume, reset variables
   const cancelReservation = () => {
-    courtSelected.value = null
-    dateSelected.value = null
+    courtSelected.value = null;
+    dateSelected.value = null;
+    endTime.value = null;
+  }
+
+
+  const addReservationTime = () => {
+    if (dateSelected.value) {
+      endTime.value = add(dateSelected.value, { hours: 1, minutes: 30 });
+      console.log('Hora final:', endTime.value);
+    }
   }
 
 

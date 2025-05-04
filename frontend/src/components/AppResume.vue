@@ -10,10 +10,11 @@
   
           <v-list dense class="text-center text-md-left">
             <v-list-item>
-              <v-list-group>
-                <v-list-item-title>Pista:  </v-list-item-title>
-                <v-list-item-title>Fecha:  </v-list-item-title>
-              </v-list-group>
+                <v-list-item-title>{{ selectedCourtObject?.name }} </v-list-item-title>
+                <v-list-item-title>Fecha: {{ dateFormated }} </v-list-item-title>
+                <v-list-item-title>Hora inicio: {{ initialHourFormated }} </v-list-item-title>
+                <v-list-item-title>Fecha fin: {{ endHourFormated }} </v-list-item-title>               
+                <v-list-item-title>{{  }} </v-list-item-title>
             </v-list-item>
           </v-list>
   
@@ -66,17 +67,24 @@
   <script setup lang="ts">
   
   import type { Court } from '@/types/court';
-  import CourtSchedule from './AppCourtSchedule.vue'
+  import { format } from 'date-fns';
+  import { es } from 'date-fns/locale';
   
 
 
   //Propiedades recibidas del padre
-  const { dateSelected, courtSelected, selectedCourtObject } = defineProps<{
+  const { dateSelected, endTime, courtSelected, selectedCourtObject } = defineProps<{
       dateSelected: Date,
+      endTime: Date,
       courtSelected: number
       selectedCourtObject: Court | null
   }>()
   
+  
+
+  const dateFormated = format(dateSelected, 'd MMMM yyyy', { locale: es });
+  const initialHourFormated = format(dateSelected, ' HH:mm');
+  const endHourFormated = format(endTime, ' HH:mm');
 
 
   //Eventos emitidos al padre
