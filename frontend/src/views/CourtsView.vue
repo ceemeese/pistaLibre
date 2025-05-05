@@ -4,6 +4,7 @@
         <AppDateTable
             :headers="headers"
             :items="store.courts"
+            @delete-item="handleDeleteItem"
         />
     </v-container>
 </template>
@@ -13,6 +14,7 @@
     import { onMounted } from 'vue'
     import { useCourtsStore } from '@/stores/courtStore'
     import AppDateTable from '@/components/AppDateTable.vue'
+    import { toast } from 'vue3-toastify';
 
 
     const store = useCourtsStore();
@@ -24,6 +26,16 @@
         { text: 'Activa', value: 'active' },
     ]
 
+    const handleDeleteItem = async (id: number) => {
+
+    const success: boolean = await store.deleteCourt(id);
+
+        if(success) {
+            toast("Pista eliminada correctamente", { type: "success" });
+        } else {
+            toast("Error al eliminar la pista", { type: "error" });
+        }
+    }
 
     onMounted(() => {
         store.fetchAll()

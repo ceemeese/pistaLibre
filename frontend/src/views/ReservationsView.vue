@@ -4,6 +4,7 @@
         <AppDateTable
             :headers="headers"
             :items="store.reservations"
+            @delete-item="handleDeleteItem"
         />
     </v-container>
 </template>
@@ -13,6 +14,7 @@
     import { onMounted } from 'vue'
     import { useReservationsStore } from '@/stores/reservationStore'
     import AppDateTable from '@/components/AppDateTable.vue'
+    import { toast } from 'vue3-toastify';
 
 
     const store = useReservationsStore();
@@ -25,6 +27,18 @@
         { text: 'Hora inicio', value: 'startTime' },
         { text: 'Hora fin', value: 'endTime' },
     ]
+
+
+    const handleDeleteItem = async (id: number) => {
+
+        const success: boolean = await store.deleteReservation(id);
+
+        if(success) {
+            toast("Reserva eliminada correctamente", { type: "success" });
+        } else {
+            toast("Error al eliminar la reserva", { type: "error" });
+        }
+    }
 
 
     onMounted(() => {
