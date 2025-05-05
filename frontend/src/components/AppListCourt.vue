@@ -1,8 +1,11 @@
 <template>
   <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Pistas disponibles</h1>
+  <div v-if="filteredCourts.length === 0" class="no-courts-message">
+      No hay pistas disponibles para el horario seleccionado.
+    </div>
     <v-row dense class="mt-15 mb-15">
       <v-col
-        v-for="court in store.courts"
+        v-for="court in filteredCourts"
         :key="court.id"
         cols="12"
         md="4"
@@ -34,36 +37,87 @@
 <script setup lang="ts">
 
   import { useCourtsStore } from '@/stores/courtStore';
-  import { onMounted } from 'vue';
+  import { useReservationsStore } from '@/stores/reservationStore';
+  import { computed, onMounted, watch } from 'vue';
 
-    const store = useCourtsStore();
-    console.log('Numero de courts desde store:', store.courts);
-    
+  const courtsStore = useCourtsStore();
+  const reservationsStore = useReservationsStore();
 
-    //const courts: string[] = ['Pista1', 'Pista2', 'Pista3', 'Pista4', 'Pista5', 'Pista6'];
+  console.log('Numero de courts desde store:', courtsStore.courts);
+  
+  const imageCourt = new URL('@/assets/court.jpg', import.meta.url).href
 
-    const imageCourt = new URL('@/assets/court.jpg', import.meta.url).href
+
+  //Evento seleccion pista al padre
+  const emit = defineEmits<{
+    (e: 'courtSelected', courId : number ): void
+  }>()
+
+  function selectCourt(courtId : number) {
+    emit('courtSelected', courtId)
+  }
 
 
-    //Evento seleccion pista al padre
-    const emit = defineEmits<{
-      (e: 'courtSelected', courId : number ): void
-    }>()
+  //prop del padre para hacer la búsqueda de pistas según la fecha seleccionada
+  const {dateSelected, endDate} = defineProps<{
+    dateSelected: Date | null,
+    endDate: Date | null,
+  }>()
 
-    function selectCourt(courtId : number) {
-      emit('courtSelected', courtId)
+
+  const filteredCourts = computed(() => {
+    if (!dateSelected || !endDate) return courtsStore.courts;
+
+    console.log('Filtrando entre:', dateSelected.toISOString(), '-', endDate.toISOString());
+
+    // Obtenemos las reservas que tienen conflicto
+    const conflictingReservations = reservationsStore.getReservationsByDateandTime(dateSelected, endDate);
+    console.log(conflictingReservations);
+
+
+    // Si no hay reservas conflictivas, todas las pistas están disponibles
+    if (conflictingReservations.length === 0) {
+      console.log('Todas las pistas disponibles', courtsStore.courts);
+      
+      return courtsStore.courts;
     }
 
+    // Filtrar pistas excluyendo las pistas de las reservas con conflicto
+    return courtsStore.courts.filter(court => {
+      
+      const isAvailable = !conflictingReservations.some(
+        reservation => reservation.courtId === court.id
+      );
 
-    //prop del padre para hacer la búsqueda de pistas según la fecha seleccionada
-    const props = defineProps<{
-      dateSelected: Date | null
-    }>()
+      // Mostrar el estado de cada pista
+      console.log('Court:', court.id, 'isUnavailable:', isAvailable);
+
+      return isAvailable;
+
+    });
+  });
+
+  // monitorear cambios en las fechas
+  watch(() => dateSelected, (newDate) => {
+      if (newDate) {
+        console.log('Fecha seleccionada cambiada a:', newDate.toISOString());
+      }
+    });
+
+  watch(() => endDate, (newDate) => {
+    if (newDate) {
+      console.log('Fecha fin cambiada a:', newDate.toISOString());
+    }
+  });
 
 
-    onMounted(() => {
-      store.fetchAll()
+
+
+  onMounted(() => {
+        reservationsStore.fetchAll()
+        courtsStore.fetchAll()
     })
+
 
 </script>
 

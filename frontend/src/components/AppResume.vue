@@ -73,9 +73,9 @@
 
 
   //Propiedades recibidas del padre
-  const { dateSelected, endTime, courtSelected, selectedCourtObject } = defineProps<{
+  const { dateSelected, endDate, courtSelected, selectedCourtObject } = defineProps<{
       dateSelected: Date,
-      endTime: Date,
+      endDate: Date,
       courtSelected: number
       selectedCourtObject: Court | null
   }>()
@@ -84,14 +84,14 @@
 
   const dateFormated = format(dateSelected, 'd MMMM yyyy', { locale: es });
   const initialHourFormated = format(dateSelected, ' HH:mm');
-  const endHourFormated = format(endTime, ' HH:mm');
+  const endHourFormated = format(endDate, ' HH:mm');
 
 
   //Eventos emitidos al padre
   const emit = defineEmits(['confirmReservation', 'cancelReservation'])
 
   function confirm() {
-    emit('confirmReservation', )
+    emit('confirmReservation')
   }
 
   function cancel() {

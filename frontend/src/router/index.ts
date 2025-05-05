@@ -66,7 +66,7 @@ router.beforeEach((to, from, next) => {
   
   if (to.meta.requiresAuth && !store.isAuthenticated) {
     next({ name: 'login' });  
-  } else if (to.meta.requiresAdmin && to.meta.requiresAuth){
+  } else if (to.meta.requiresAdmin && (!store.isAuthenticated || !store.isAdmin)){
     next({name: 'user'});
   } else {
     next();

@@ -10,13 +10,14 @@
       <ListCourt 
         v-if="userStore.isAuthenticated && dateSelected"
         :dateSelected="dateSelected"
+        :endDate="endDate"
         @court-selected="onCourtSelected"
       />
       
       <Resume
-        v-if="userStore.isAuthenticated && dateSelected && courtSelected && endTime"
+        v-if="userStore.isAuthenticated && dateSelected && courtSelected && endDate"
         :dateSelected="dateSelected"
-        :endTime="endTime"
+        :endDate="endDate"
         :courtSelected="courtSelected"
         :selectedCourtObject="selectedCourtObject"
         @confirm-reservation="confirmReservation"
@@ -36,17 +37,20 @@
   import type { Court } from '@/types/court';
   import { useCourtsStore } from '@/stores/courtStore';
   import { add } from 'date-fns';
+  import type { NewReservation } from '@/types/reservation';
+  import { useReservationsStore } from '@/stores/reservationStore';
 
 
   //Variables
   const userStore = useUsersStore();
   const courtStore = useCourtsStore();
+  const reservationStore = useReservationsStore();
 
   //const datepickerRef = ref<HTMLElement | null>(null);
 
   const dateSelected = ref<Date| null>(null);
   const courtSelected = ref<number | null>(null);
-  const endTime = ref<Date | null>(null);
+  const endDate = ref<Date | null>(null);
 
 
   const onDateSelected = (date: Date) => {
@@ -73,30 +77,40 @@
 
   //Evento confirmar reserva del Resume
   const confirmReservation = (user: { id: number }) => {
-    console.log('Reserva confirmada desde componente hijo Resume:', {
-      court: courtSelected.value,
-    })
-    courtSelected.value = null;
-  }
+
+    console.log('Reserva confirmada desde componente hijo Resume');
+
+    if (userStore.loggedUser!.id && courtSelected.value && dateSelected.value && endDate.value) {
+
+      const newReservation:  NewReservation = {
+        userId: userStore.loggedUser!.id,
+        courtId: courtSelected.value,
+        date: dateSelected.value,
+        endDate: endDate.value, 
+      }
+
+      reservationStore.addReservation(newReservation);
+
+    } else {
+      console.log("Alguno de los campos está vacío");
+    }
+  } 
+
+
   //Evento cancelar reserva del Resume, reset variables
   const cancelReservation = () => {
     courtSelected.value = null;
     dateSelected.value = null;
-    endTime.value = null;
+    endDate.value = null;
   }
 
 
   const addReservationTime = () => {
     if (dateSelected.value) {
-      endTime.value = add(dateSelected.value, { hours: 1, minutes: 30 });
-      console.log('Hora final:', endTime.value);
+      endDate.value = add(dateSelected.value, { hours: 1, minutes: 30 });
+      console.log('Hora final:', endDate.value);
     }
   }
-
-
-
-
-
 
 
   //Scroll de botón reservar a datepicker

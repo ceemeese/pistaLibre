@@ -162,14 +162,17 @@ let reservations = [];
 
 function initReservations() {
     for (let i = 0; i<2; i++) {
+
+        const start = faker.date.soon({ days: 2 });
+        const end = new Date(start);
+        end.setMinutes(end.getMinutes() + 90);
+        
         reservations.push({
             id: i,
             courtId: faker.number.int({ min: 1, max: 6 }),
             userId: faker.helpers.arrayElement(users).id,
-            date: faker.date.soon({ days: 2 }).toISOString().split('T')[0], //formato YYYY-MM-DD
-            startTime: "17:00",
-            endTime: "18:00",
-            status: "confirmed"
+            date: start,
+            endDate: end,
         })
     }
 }
@@ -205,9 +208,7 @@ app.put('/reservations/:id', (request, response) => {
         result[0].courtId = request.body.courtId
         result[0].userId = request.body.userId
         result[0].date = request.body.date
-        result[0].startTime = request.body.startTime
-        result[0].endTime = request.body.endTime
-        result[0].status = request.body.status
+        result[0].endDate = request.body.endDate
         response.sendStatus(200)
     } else {
         response.sendStatus(404)
@@ -219,8 +220,9 @@ app.post('/reservations', (req, res) => {
     let reservation = req.body
     reservation.id = reservations.length > 0 ? Math.max(...reservations.map(r => r.id)) + 1 : 1;
     console.log(`Reserva ${JSON.stringify(reservation)}`)
-    reservations.push(reservation)
-    res.sendStatus(201)
+    reservations.push(reservation);
+    
+    res.status(201).json(reservation);
 })
 
 
