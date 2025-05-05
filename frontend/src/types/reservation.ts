@@ -1,13 +1,11 @@
 export interface NewReservation {
     courtId: number;
     userId: number;
-    date: string;
-    startTime: string;
-    endTime: string;
+    date: Date;
+    endDate: Date;
 }
 
 
 export interface Reservation extends NewReservation {
     id: number;
-    status: string;
 }

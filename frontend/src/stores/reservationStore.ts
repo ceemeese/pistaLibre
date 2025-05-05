@@ -19,9 +19,7 @@ export const useReservationsStore = defineStore('reservations', () => {
                         courtId: d.courtId,
                         userId: d.userId,
                         date: d.date,
-                        startTime: d.startTime,
-                        endTime: d.endTime,
-                        status: d.status
+                        endDate: d.endDate,
                     }))
     
                     reservations.push(... reservationsInfo);
@@ -45,11 +43,10 @@ export const useReservationsStore = defineStore('reservations', () => {
                     body: JSON.stringify(reservation)
                 })
 
-                const data = await response.json();
-    
                 if (response.ok) {
-                    const NewReservation = { ...data }
-                    reservations.push(NewReservation)
+                    const data = await response.json();
+                    const newReservation = { ...data }
+                    reservations.push(newReservation)
                     console.log('Reserva registrada correctamente:', data);
                 }
             } catch (error) {
@@ -105,9 +102,30 @@ export const useReservationsStore = defineStore('reservations', () => {
 
         }
 
+
+        function getReservationsByDateandTime(selectedDate: Date, endDate: Date) {
+
+            //Pasar fechas a .getTime para poder compararlas
+            const selectedStartTime = new Date(selectedDate).getTime();
+            const selectedEndTime = new Date(endDate).getTime();
+            
+            console.log('Filtrando reservas entre:', new Date(selectedStartTime).toISOString(), '-', new Date(selectedEndTime).toISOString());
+          
+            return reservations.filter((reservation) => {
+                const reservationStart = new Date(reservation.date).getTime();
+                const reservationEnd = new Date(reservation.endDate).getTime();
+                
+                // Verifica solape pero se permite coger una reserva si termina otra
+                const isConflict = selectedStartTime < reservationEnd && selectedEndTime > reservationStart && !(selectedStartTime === reservationEnd || selectedEndTime === reservationStart);
+            
+                console.log('Conflicto: ', isConflict);
+                return isConflict;
+            });
+          }
+
     
 
 
-    return { reservations, fetchAll, addReservation, modifyReservation, searchReservation }
+    return { reservations, fetchAll, addReservation, modifyReservation, searchReservation, getReservationsByDateandTime }
 })
 
