@@ -9,5 +9,10 @@ export interface Court extends NewCourt {
     active: boolean
 }
 
+export interface CourtResult {
+    success: boolean;
+    message: string;
+}
+
 
 

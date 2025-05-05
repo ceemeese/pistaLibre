@@ -48,9 +48,14 @@ export const useReservationsStore = defineStore('reservations', () => {
                     const newReservation = { ...data }
                     reservations.push(newReservation)
                     console.log('Reserva registrada correctamente:', data);
+                    return { success: true, message: 'Reserva registrada correctamente' };
+                } else {
+                    console.log('Error al registrar la reserva');
+                    return { success: false, message: 'Error al registrar la reserva' };
                 }
             } catch (error) {
                 console.log('Error:', error);
+                return  { success: false, message: 'Error en la conexión con el servidor' };
             } 
 
         }
@@ -104,7 +109,7 @@ export const useReservationsStore = defineStore('reservations', () => {
 
 
 
-        async function deleteReservation (id:number): Promise <boolean> {
+        async function deleteReservation (id:number) {
             try {
                 const response = await fetch(`http://localhost:3000/reservations/${id}`, {
                     method: 'DELETE',
@@ -117,16 +122,15 @@ export const useReservationsStore = defineStore('reservations', () => {
                         reservations.splice(index, 1);
                     }
                     console.log('Reserva eliminada correctamente');
-                    return true;
+                    return { success: true, message: 'Reserva eliminada' };
                 } else {
                     console.log('Error al eliminar la reserva');
-                    return false;
+                    return { success: false, message: 'Error al eliminar reserva' };
                 }
-                
                 
             } catch (error) {
                 console.log('Error: ', error);
-                return false;
+                return  { success: false, message: 'Error en la conexión con el servidor' };
             }
         }
 

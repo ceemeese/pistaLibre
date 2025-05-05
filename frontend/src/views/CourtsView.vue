@@ -15,6 +15,7 @@
     import { useCourtsStore } from '@/stores/courtStore'
     import AppDateTable from '@/components/AppDateTable.vue'
     import { toast } from 'vue3-toastify';
+import type { CourtResult } from '@/types/court';
 
 
     const store = useCourtsStore();
@@ -28,13 +29,9 @@
 
     const handleDeleteItem = async (id: number) => {
 
-        const success: boolean = await store.deleteCourt(id);
+        const result: CourtResult = await store.deleteCourt(id);
 
-        if(success) {
-            toast("Pista eliminada correctamente", { type: "success" });
-        } else {
-            toast("Error al eliminar la pista", { type: "error" });
-        }
+        toast(result.message, {type: result.success ? 'success' : 'error',});
     }
 
     onMounted(() => {
