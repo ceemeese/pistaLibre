@@ -15,6 +15,7 @@
     import { useUsersStore } from '@/stores/userStore'
     import AppDateTable from '@/components/AppDateTable.vue'
     import { toast } from 'vue3-toastify'
+import type { UserResult } from '@/types/user'
 
 
     const store = useUsersStore()
@@ -27,13 +28,9 @@
 
     const handleDeleteItem = async (id: number) => {
 
-        const success: boolean = await store.deleteUser(id);
+        const result: UserResult = await store.deleteUser(id);
 
-        if(success) {
-            toast("Usuario eliminado correctamente", { type: "success" });
-        } else {
-            toast("Error al eliminar usuario", { type: "error" });
-        }
+        toast(result.message, {type: result.success ? 'success' : 'error',});
     }
 
 

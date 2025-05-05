@@ -15,6 +15,7 @@
     import { useReservationsStore } from '@/stores/reservationStore'
     import AppDateTable from '@/components/AppDateTable.vue'
     import { toast } from 'vue3-toastify';
+import type { ReservationResult } from '@/types/reservation';
 
 
     const store = useReservationsStore();
@@ -31,13 +32,9 @@
 
     const handleDeleteItem = async (id: number) => {
 
-        const success: boolean = await store.deleteReservation(id);
+        const result: ReservationResult = await store.deleteReservation(id);
 
-        if(success) {
-            toast("Reserva eliminada correctamente", { type: "success" });
-        } else {
-            toast("Error al eliminar la reserva", { type: "error" });
-        }
+        toast(result.message, {type: result.success ? 'success' : 'error',});
     }
 
 

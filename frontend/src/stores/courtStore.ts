@@ -113,15 +113,15 @@ export const useCourtsStore = defineStore('courts', () => {
                     courts.splice(index, 1);
                 }
                 console.log('Pista eliminada correctamente');
-                return true;
+                return { success: true, message: 'Pista eliminada' };
             } else {
                 console.log('Error al eliminar la pista');
-                return false;
+                return { success: false, message: 'Error al eliminar la pista' };
             }
             
         } catch (error) {
             console.log('Error: ', error);
-            return false;
+            return  { success: false, message: 'Error en la conexión con el servidor' };
         }
     }
 

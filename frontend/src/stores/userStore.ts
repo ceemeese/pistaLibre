@@ -138,15 +138,15 @@ export const useUsersStore = defineStore('users', () => {
                     users.splice(index, 1);
                 }
                 console.log('Usuario eliminado correctamente');
-                return true;
+                return { success: true, message: 'Usuario eliminado' };
             } else {
                 console.log('Error al eliminar el usuario');
-                return false;
+                return { success: false, message: 'Error al eliminar usuario' };
             }
             
         } catch (error) {
             console.log('Error: ', error);
-            return false;
+            return  { success: false, message: 'Error en la conexión con el servidor' };
         }
     }
 
