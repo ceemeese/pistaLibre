@@ -4,6 +4,7 @@
         <AppDateTable
             :headers="headers"
             :items="store.users"
+            @delete-item="handleDeleteItem"
         />
     </v-container>
 </template>
@@ -13,6 +14,7 @@
     import { onMounted } from 'vue'
     import { useUsersStore } from '@/stores/userStore'
     import AppDateTable from '@/components/AppDateTable.vue'
+    import { toast } from 'vue3-toastify'
 
 
     const store = useUsersStore()
@@ -22,6 +24,17 @@
         { text: 'Apellido', value: 'surname' },
         { text: 'Email', value: 'email' },
     ]
+
+    const handleDeleteItem = async (id: number) => {
+
+        const success: boolean = await store.deleteUser(id);
+
+        if(success) {
+            toast("Usuario eliminado correctamente", { type: "success" });
+        } else {
+            toast("Error al eliminar usuario", { type: "error" });
+        }
+    }
 
 
     onMounted(() => {

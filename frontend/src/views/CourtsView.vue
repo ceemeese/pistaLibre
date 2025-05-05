@@ -28,7 +28,7 @@
 
     const handleDeleteItem = async (id: number) => {
 
-    const success: boolean = await store.deleteCourt(id);
+        const success: boolean = await store.deleteCourt(id);
 
         if(success) {
             toast("Pista eliminada correctamente", { type: "success" });

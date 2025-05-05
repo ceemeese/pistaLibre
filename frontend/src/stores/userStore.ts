@@ -126,14 +126,21 @@ export const useUsersStore = defineStore('users', () => {
                 headers: {"Content-type": "application/json;charset=UTF-8"},
             })
 
-            const index = users.findIndex(u => u.id === id);
-            if (index !== -1) {
-                users.splice(index, 1);
+            if(response.ok) {
+                const index = users.findIndex(u => u.id === id);
+                if (index !== -1) {
+                    users.splice(index, 1);
+                }
+                console.log('Usuario eliminado correctamente');
+                return true;
+            } else {
+                console.log('Error al eliminar el usuario');
+                return false;
             }
-            console.log('Usuario eliminado correctamente');
             
         } catch (error) {
             console.log('Error: ', error);
+            return false;
         }
     }
 

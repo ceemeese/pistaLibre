@@ -27,15 +27,9 @@
   </template>
   
   <script setup lang="ts">
-    interface Header {
-        text: string
-        value: string
-    }
-    
-    interface Item {
-        id: number
-        [key: string]: any
-    }
+import type { Header, Item } from '@/types/table';
+
+
     
     //Se traen del padre UsersView para mostrar
     const props = defineProps<{
