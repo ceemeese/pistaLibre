@@ -27,6 +27,7 @@
   </template>
   
   <script setup lang="ts">
+import type { Reservation } from '@/types/reservation';
 import type { Header, Item } from '@/types/table';
 
 

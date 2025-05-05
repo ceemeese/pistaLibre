@@ -11,9 +11,9 @@
           <v-list dense class="text-center text-md-left">
             <v-list-item>
                 <v-list-item-title>{{ selectedCourtObject?.name }} </v-list-item-title>
-                <v-list-item-title>Fecha: {{ dateFormated }} </v-list-item-title>
-                <v-list-item-title>Hora inicio: {{ initialHourFormated }} </v-list-item-title>
-                <v-list-item-title>Fecha fin: {{ endHourFormated }} </v-list-item-title>               
+                <v-list-item-title>Fecha: {{ dateFormatted }} </v-list-item-title>
+                <v-list-item-title>Hora inicio: {{ initialHourFormatted }} </v-list-item-title>
+                <v-list-item-title>Fecha fin: {{ endHourFormatted }} </v-list-item-title>               
                 <v-list-item-title>{{  }} </v-list-item-title>
             </v-list-item>
           </v-list>
@@ -67,10 +67,7 @@
   <script setup lang="ts">
   
   import type { Court } from '@/types/court';
-  import { format } from 'date-fns';
-  import { es } from 'date-fns/locale';
-  
-
+  import { formatReservationDates } from '@/utils/dateFormatter';
 
   //Propiedades recibidas del padre
   const { dateSelected, endDate, courtSelected, selectedCourtObject } = defineProps<{
@@ -80,12 +77,7 @@
       selectedCourtObject: Court | null
   }>()
   
-  
-
-  const dateFormated = format(dateSelected, 'd MMMM yyyy', { locale: es });
-  const initialHourFormated = format(dateSelected, ' HH:mm');
-  const endHourFormated = format(endDate, ' HH:mm');
-
+  const { dateFormatted, initialHourFormatted, endHourFormatted } = formatReservationDates(dateSelected, endDate);
 
   //Eventos emitidos al padre
   const emit = defineEmits(['confirmReservation', 'cancelReservation'])
