@@ -39,8 +39,7 @@
   import { add } from 'date-fns';
   import type { NewReservation, ReservationResult } from '@/types/reservation';
   import { useReservationsStore } from '@/stores/reservationStore';
-import router from '@/router';
-import { toast } from 'vue3-toastify';
+  import { toast } from 'vue3-toastify';
 
 
   //Variables
