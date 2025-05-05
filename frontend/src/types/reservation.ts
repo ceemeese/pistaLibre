@@ -9,3 +9,9 @@ export interface NewReservation {
 export interface Reservation extends NewReservation {
     id: number;
 }
+
+
+export interface ReservationResult {
+    success: boolean;
+    message: string;
+}

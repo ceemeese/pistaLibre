@@ -48,9 +48,14 @@ export const useReservationsStore = defineStore('reservations', () => {
                     const newReservation = { ...data }
                     reservations.push(newReservation)
                     console.log('Reserva registrada correctamente:', data);
+                    return { success: true, message: 'Reserva registrada correctamente' };
+                } else {
+                    console.log('Error al registrar la reserva');
+                    return { success: false, message: 'Error al registrar la reserva' };
                 }
             } catch (error) {
                 console.log('Error:', error);
+                return  { success: false, message: 'Error en la conexión con el servidor' };
             } 
 
         }

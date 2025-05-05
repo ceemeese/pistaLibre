@@ -11,3 +11,9 @@ export interface User extends NewUser {
 }
 
 export type UserRole = 'admin' | 'user';
+
+
+export interface UserResult {
+    success: boolean;
+    message: string;
+}

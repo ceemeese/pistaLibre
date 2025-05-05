@@ -37,7 +37,7 @@
   import type { Court } from '@/types/court';
   import { useCourtsStore } from '@/stores/courtStore';
   import { add } from 'date-fns';
-  import type { NewReservation } from '@/types/reservation';
+  import type { NewReservation, ReservationResult } from '@/types/reservation';
   import { useReservationsStore } from '@/stores/reservationStore';
 import router from '@/router';
 import { toast } from 'vue3-toastify';
@@ -90,20 +90,11 @@ import { toast } from 'vue3-toastify';
         date: dateSelected.value,
         endDate: endDate.value, 
       }
+    
+      const result: ReservationResult = await reservationStore.addReservation(newReservation);
 
-      
-      try {
-        await reservationStore.addReservation(newReservation);
-        toast("Reverva registrada correctamente", {
-                type: "success",
-        });
-      } catch (error) {
-        toast("Error al confirmar la reserva", {
-          type: "error",
-        });
-        console.error("Error al confirmar la reserva:", error);
-        
-      }
+      toast(result.message, {type: result.success ? 'success' : 'error',});
+
     } else {
       console.log("Alguno de los campos está vacío");
     }

@@ -58,10 +58,16 @@ export const useUsersStore = defineStore('users', () => {
             if (response.ok) {
                 const newUser = { ...data }
                 users.push(newUser)
-                console.log('Datos registrados correctamente:', data);
+                console.log('Usuario registrados correctamente:', data);
+                return { success: true, message: 'Usuario registrado correctamente' };
+            } else {
+                console.log('Error al registrar usuario');
+                return { success: false, message: 'Error al registrar usuario' };
             }
+            
         } catch (error) {
             console.log('Error:', error);
+            return  { success: false, message: 'Error en la conexión con el servidor' };
         }  
 
     }
