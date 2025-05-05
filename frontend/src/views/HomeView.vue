@@ -39,6 +39,8 @@
   import { add } from 'date-fns';
   import type { NewReservation } from '@/types/reservation';
   import { useReservationsStore } from '@/stores/reservationStore';
+import router from '@/router';
+import { toast } from 'vue3-toastify';
 
 
   //Variables
@@ -76,7 +78,7 @@
 
 
   //Evento confirmar reserva del Resume
-  const confirmReservation = (user: { id: number }) => {
+  const confirmReservation = async (user: { id: number }) => {
 
     console.log('Reserva confirmada desde componente hijo Resume');
 
@@ -89,8 +91,19 @@
         endDate: endDate.value, 
       }
 
-      reservationStore.addReservation(newReservation);
-
+      
+      try {
+        await reservationStore.addReservation(newReservation);
+        toast("Reverva registrada correctamente", {
+                type: "success",
+        });
+      } catch (error) {
+        toast("Error al confirmar la reserva", {
+          type: "error",
+        });
+        console.error("Error al confirmar la reserva:", error);
+        
+      }
     } else {
       console.log("Alguno de los campos está vacío");
     }
