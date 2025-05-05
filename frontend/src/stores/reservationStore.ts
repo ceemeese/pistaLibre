@@ -103,6 +103,34 @@ export const useReservationsStore = defineStore('reservations', () => {
         }
 
 
+
+        async function deleteReservation (id:number): Promise <boolean> {
+            try {
+                const response = await fetch(`http://localhost:3000/reservations/${id}`, {
+                    method: 'DELETE',
+                    headers: {"Content-type": "application/json;charset=UTF-8"},
+                })
+
+                if(response.ok) {
+                    const index = reservations.findIndex(r => r.id === id);
+                    if (index !== -1) {
+                        reservations.splice(index, 1);
+                    }
+                    console.log('Reserva eliminada correctamente');
+                    return true;
+                } else {
+                    console.log('Error al eliminar la reserva');
+                    return false;
+                }
+                
+                
+            } catch (error) {
+                console.log('Error: ', error);
+                return false;
+            }
+        }
+
+
         function getReservationsByDateandTime(selectedDate: Date, endDate: Date) {
 
             //Pasar fechas a .getTime para poder compararlas
@@ -126,6 +154,6 @@ export const useReservationsStore = defineStore('reservations', () => {
     
 
 
-    return { reservations, fetchAll, addReservation, modifyReservation, searchReservation, getReservationsByDateandTime }
+    return { reservations, fetchAll, addReservation, modifyReservation, searchReservation, getReservationsByDateandTime, deleteReservation }
 })
 

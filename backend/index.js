@@ -81,6 +81,18 @@ app.post('/users', (req, res) => {
     res.status(201).json(user);
 })
 
+app.delete('/users/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const exists = users.some(u => u.id === id);
+
+    if (exists) {
+        users = users.filter(u => u.id !== id); 
+        res.sendStatus(204);
+    } else {
+        res.sendStatus(404);
+    }
+})
+
 
 
 
@@ -155,6 +167,8 @@ app.delete('/courts/:id', (req, res) => {
         res.sendStatus(404);
     }
 })
+
+
 
 
 //RESERVAS

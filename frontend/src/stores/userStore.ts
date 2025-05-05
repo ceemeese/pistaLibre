@@ -119,6 +119,32 @@ export const useUsersStore = defineStore('users', () => {
     }
 
 
+    async function deleteUser (id:number) {
+        try {
+            const response = await fetch(`http://localhost:3000/users/${id}`, {
+                method: 'DELETE',
+                headers: {"Content-type": "application/json;charset=UTF-8"},
+            })
+
+            if(response.ok) {
+                const index = users.findIndex(u => u.id === id);
+                if (index !== -1) {
+                    users.splice(index, 1);
+                }
+                console.log('Usuario eliminado correctamente');
+                return true;
+            } else {
+                console.log('Error al eliminar el usuario');
+                return false;
+            }
+            
+        } catch (error) {
+            console.log('Error: ', error);
+            return false;
+        }
+    }
+
+
     function login(form:Form) {
 
         console.log(form);
@@ -151,5 +177,5 @@ export const useUsersStore = defineStore('users', () => {
     }, { immediate: true });
 
 
-  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser, isAdmin}
+  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser, isAdmin, deleteUser}
 })

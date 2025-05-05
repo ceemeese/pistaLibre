@@ -100,6 +100,33 @@ export const useCourtsStore = defineStore('courts', () => {
 
 
 
-    return { courts, fetchAll, addCourt, modifyCourt, searchCourt}
+    async function deleteCourt (id:number) {
+        try {
+            const response = await fetch(`http://localhost:3000/courts/${id}`, {
+                method: 'DELETE',
+                headers: {"Content-type": "application/json;charset=UTF-8"},
+            })
+
+            if(response.ok) {
+                const index = courts.findIndex(r => r.id === id);
+                if (index !== -1) {
+                    courts.splice(index, 1);
+                }
+                console.log('Pista eliminada correctamente');
+                return true;
+            } else {
+                console.log('Error al eliminar la pista');
+                return false;
+            }
+            
+        } catch (error) {
+            console.log('Error: ', error);
+            return false;
+        }
+    }
+
+
+
+    return { courts, fetchAll, addCourt, modifyCourt, searchCourt, deleteCourt}
 
 })

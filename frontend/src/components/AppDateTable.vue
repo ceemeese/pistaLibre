@@ -17,7 +17,7 @@
             <v-btn class="mr-2" size="x-small" icon @click="emit('put', item)">
                 <v-icon>mdi-pencil</v-icon>
             </v-btn>
-            <v-btn size="x-small" icon @click="emit('delete', item.id)">
+            <v-btn size="x-small" icon @click=handleDelete(item.id)>
                 <v-icon>mdi-delete</v-icon>
             </v-btn>
         </td>
@@ -27,15 +27,9 @@
   </template>
   
   <script setup lang="ts">
-    interface Header {
-        text: string
-        value: string
-    }
-    
-    interface Item {
-        id: number
-        [key: string]: any
-    }
+import type { Header, Item } from '@/types/table';
+
+
     
     //Se traen del padre UsersView para mostrar
     const props = defineProps<{
@@ -46,8 +40,13 @@
     //Se pasan al padre los eventos
     const emit = defineEmits<{
         (e: 'put', item: Item): void
-        (e: 'delete', id: number): void
+        (e: 'delete-item', id: number): void
     }>()
+
+    const handleDelete = (id: number) => {
+      emit('delete-item', id)
+    }
+
   </script>
   
   <style scoped></style>
