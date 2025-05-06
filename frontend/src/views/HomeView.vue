@@ -28,7 +28,7 @@
 
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import Banner from '../components/AppBanner.vue'
   import Datepicker from '@/components/AppDatepicker.vue';
   import ListCourt from '@/components/AppListCourt.vue';
@@ -116,13 +116,11 @@
   }
 
 
-  //Scroll de botón reservar a datepicker
-  /*const scrollToDatepicker = async () => {
-    console.log('Evento recibido');
-    
-    await nextTick() 
-    datepickerRef.value?.scrollIntoView({ behavior: 'smooth' })
-  }
-  */
+  
+  onMounted( () => {
+    userStore.fetchAll();
+    reservationStore.fetchAll();
+    courtStore.fetchAll();
+  })
 
 </script>
