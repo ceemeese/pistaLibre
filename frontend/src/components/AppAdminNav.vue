@@ -7,14 +7,14 @@ f<template>
       >
 
         
-        <v-btn to="/admin/users">
+        <v-btn v-if="store.isAdmin" to="/admin/users">
           <v-icon>mdi-account-circle</v-icon>
   
           Usuarios
         </v-btn>
   
       
-        <v-btn to="/admin/courts">
+        <v-btn v-if="store.isAdmin" to="/admin/courts">
           <v-icon>mdi-tennis</v-icon>
   
           Pistas
@@ -32,6 +32,9 @@ f<template>
 
 <script setup lang="ts">
   import { ref } from 'vue'
+  import { useUsersStore } from '@/stores/userStore';
+
+  const store = useUsersStore();
 
   const value = ref(1)
 </script>

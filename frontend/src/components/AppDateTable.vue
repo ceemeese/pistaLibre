@@ -27,15 +27,13 @@
   </template>
   
   <script setup lang="ts">
-import type { Reservation } from '@/types/reservation';
-import type { Header, Item } from '@/types/table';
 
+  import type { Header, Item } from '@/types/table';
 
-    
     //Se traen del padre UsersView para mostrar
-    const props = defineProps<{
-        headers: Header[]
-        items: Item[]
+    const { headers, items} = defineProps<{
+        headers: Array<Header>
+        items: Array<Item>
     }>()
 
     //Se pasan al padre los eventos

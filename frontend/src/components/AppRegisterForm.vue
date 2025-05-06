@@ -19,8 +19,8 @@
                     :error-messages="v$.surname.$errors.map(e => String(e.$message))"
                     label="Apellidos"
                     required
-                    @blur="v$.email.$touch"
-                    @input="v$.email.$touch"
+                    @blur="v$.surname.$touch"
+                    @input="v$.surname.$touch"
                     class="mb-2"
                 ></v-text-field>
             
@@ -40,8 +40,8 @@
                     :error-messages="v$.password.$errors.map(e => String(e.$message))"
                     label="Contraseña"
                     required
-                    @blur="v$.email.$touch"
-                    @input="v$.email.$touch"
+                    @blur="v$.password.$touch"
+                    @input="v$.password.$touch"
                     class="mb-2"
                 ></v-text-field>
             
@@ -69,8 +69,7 @@
     import type { State } from '@/types/state.ts';
     import { toast } from "vue3-toastify";
     import router from '@/router';
-import type { NewUser, UserResult } from '@/types/user';
-
+    import type { NewUser, UserResult } from '@/types/user';
 
     //Variable reactiva de state
     const state = reactive<State>({
@@ -91,7 +90,6 @@ import type { NewUser, UserResult } from '@/types/user';
 
 
     async function submit () {
-        
         v$.value.$touch()
 
         if (v$.value.$invalid) {
@@ -99,21 +97,19 @@ import type { NewUser, UserResult } from '@/types/user';
             return;
         }
 
-        const newUser: NewUser = { 
-            name: state.name,
-            surname: state.surname,
-            email: state.email,
-            password: state.password,
-        }
+        const newUser = buildNewUser()
 
         try {
 
-            const isRegistered = store.users.some(u => u.email === state.email)
-
-            if(isRegistered) {
-                toast("Este correo ya está registrado", {type: "error"});
-
-            throw new Error ('Este correo ya está registrado')
+            if (isDuplicateEmail(newUser.email)) {
+                toast("Este correo ya está registrado", { 
+                    type: "error", 
+                    onClose: () => {
+                        state.email = ''; 
+                    }
+                }
+            );
+                throw new Error("Este correo ya está registrado");
             }
 
             const result: UserResult = await store.addUser(newUser);
@@ -137,6 +133,20 @@ import type { NewUser, UserResult } from '@/types/user';
         for (const [key, value] of Object.entries(initialState) as [keyof State, string][]) {
             state[key] = value
         }
+    }
+
+    function buildNewUser(): NewUser {
+        return {
+            name: state.name,
+            surname: state.surname,
+            email: state.email,
+            password: state.password,
+        }   
+    }
+
+    
+    function isDuplicateEmail(email: string): boolean {
+        return store.users.some(user => user.email === email);
     }
 </script>
 

@@ -5,7 +5,7 @@
         <Chart
             :reservationPerMonth="reservationPerMonth" 
         />
-        <NavAdmin v-if="userStore.isAdmin" />
+        <NavAdmin  />
     </v-container>
 
 </template>

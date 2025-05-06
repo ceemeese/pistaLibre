@@ -17,7 +17,6 @@
           max-width="344"
           :title="court.name"
         >
-
             <v-img
             height="200px"
             :src="imageCourt"
@@ -29,7 +28,6 @@
             </template>
         </v-card>
   
-        
       </v-col>
     </v-row>
   </template>
@@ -47,6 +45,12 @@
   
   const imageCourt = new URL('@/assets/court.jpg', import.meta.url).href
 
+  //prop del padre para hacer la búsqueda de pistas según la fecha seleccionada
+  const {dateSelected, endDate} = defineProps<{
+    dateSelected: Date | null,
+    endDate: Date | null,
+  }>()
+
 
   //Evento seleccion pista al padre
   const emit = defineEmits<{
@@ -58,22 +62,16 @@
   }
 
 
-  //prop del padre para hacer la búsqueda de pistas según la fecha seleccionada
-  const {dateSelected, endDate} = defineProps<{
-    dateSelected: Date | null,
-    endDate: Date | null,
-  }>()
+
 
 
   const filteredCourts = computed(() => {
     if (!dateSelected || !endDate) return courtsStore.courts;
-
     console.log('Filtrando entre:', dateSelected.toISOString(), '-', endDate.toISOString());
 
     // Obtenemos las reservas que tienen conflicto
     const conflictingReservations = reservationsStore.getReservationsByDateandTime(dateSelected, endDate);
     console.log(conflictingReservations);
-
 
     // Si no hay reservas conflictivas, todas las pistas están disponibles
     if (conflictingReservations.length === 0) {
@@ -97,6 +95,8 @@
     });
   });
 
+
+
   // monitorear cambios en las fechas
   watch(() => dateSelected, (newDate) => {
       if (newDate) {
@@ -109,14 +109,6 @@
       console.log('Fecha fin cambiada a:', newDate.toISOString());
     }
   });
-
-
-
-
-  onMounted(() => {
-        reservationsStore.fetchAll()
-        courtsStore.fetchAll()
-    })
 
 
 </script>

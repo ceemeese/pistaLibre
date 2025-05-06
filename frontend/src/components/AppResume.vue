@@ -2,7 +2,6 @@
     <v-card class="pa-6">
       <v-row class="flex-column flex-md-row">
         
-        
         <v-col cols="12" md="6" >
           <v-card-title class="text-h6 text-center text-md-left">
             Resumen de la reserva
@@ -14,11 +13,9 @@
                 <v-list-item-title>Fecha: {{ dateFormatted }} </v-list-item-title>
                 <v-list-item-title>Hora inicio: {{ initialHourFormatted }} </v-list-item-title>
                 <v-list-item-title>Fecha fin: {{ endHourFormatted }} </v-list-item-title>               
-                <v-list-item-title>{{  }} </v-list-item-title>
             </v-list-item>
           </v-list>
   
-          
           <v-form>
             <v-row
               class="mt-4 pl-4"
@@ -46,19 +43,6 @@
           </v-form>
         </v-col>
   
-       <!--
-        <v-col
-          cols="12"
-          md="6"
-          class="d-flex justify-center align-center mt-6 mt-md-0"
-        >
-          <CourtSchedule
-            :reserva="reserva"
-            :pista="pista"
-            :reservas="reservasDia"
-          />
-        </v-col>-->
-  
       </v-row>
     </v-card>
   </template>
@@ -73,7 +57,7 @@
   const { dateSelected, endDate, courtSelected, selectedCourtObject } = defineProps<{
       dateSelected: Date,
       endDate: Date,
-      courtSelected: number
+      courtSelected: number,
       selectedCourtObject: Court | null
   }>()
   

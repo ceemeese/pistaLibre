@@ -2,20 +2,19 @@
     <Banner />
     <v-container v-if="userStore.isAuthenticated">
       <Datepicker 
-        v-if="userStore.isAuthenticated"
         ref="datepickerRef" 
         @date-selected="onDateSelected" 
       />
 
       <ListCourt 
-        v-if="userStore.isAuthenticated && dateSelected"
+        v-if="dateSelected"
         :dateSelected="dateSelected"
         :endDate="endDate"
         @court-selected="onCourtSelected"
       />
       
       <Resume
-        v-if="userStore.isAuthenticated && dateSelected && courtSelected && endDate"
+        v-if="dateSelected && courtSelected && endDate"
         :dateSelected="dateSelected"
         :endDate="endDate"
         :courtSelected="courtSelected"
@@ -48,7 +47,6 @@
   const reservationStore = useReservationsStore();
 
   //const datepickerRef = ref<HTMLElement | null>(null);
-
   const dateSelected = ref<Date| null>(null);
   const courtSelected = ref<number | null>(null);
   const endDate = ref<Date | null>(null);

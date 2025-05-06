@@ -23,18 +23,10 @@
   import { useUsersStore } from "@/stores/userStore";
   import router from "@/router";
   import { form } from "@/types/form";
-  import { onMounted } from "vue";
   import { toast } from "vue3-toastify";
   
 
   const store = useUsersStore();
-
-  onMounted(() => {
-        store.fetchAll();
-    });
-
-
-
   const handleSubmit = async () => {
 
     try {

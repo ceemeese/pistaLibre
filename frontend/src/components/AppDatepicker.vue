@@ -23,8 +23,7 @@
 
 
 <script setup lang="ts">
-  /*import VueCal from 'vue-cal'
-  import 'vue-cal/dist/vuecal.css'*/
+
   import { ref, computed} from 'vue';
   import { addDays } from 'date-fns';
 
@@ -32,20 +31,6 @@
   const startTime = ref({ hours: 9, minutes: 0 });
   const maxDate = computed(() => addDays(new Date(), 14));
   
-
-
-  /*const datepickerSection = ref<HTMLElement | null>(null);
-
-  function scrollTo(this: { scrollTo: () => void; }) {
-    datepickerSection.value?.scrollIntoView({ behavior: 'smooth' })
-  }*/
-
-
-
-  /*defineExpose({
-    scrollTo,
-  });*/
-
 
   //evento seleccion fecha al padre
   const emit  = defineEmits<{
@@ -56,7 +41,6 @@
     console.log('Emite fecha el hijo')
     emit('dateSelected', value)
   }
-
 
 </script>
 
