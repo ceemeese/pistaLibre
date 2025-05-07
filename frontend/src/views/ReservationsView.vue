@@ -62,17 +62,11 @@
         })
     )
 
-
     const handleDeleteItem = async (id: number) => {
         const result: ReservationResult = await reservationStore.deleteReservation(id);
         toast(result.message, {type: result.success ? 'success' : 'error',});
     }
 
-    onMounted( () => {
-       userStore.fetchAll();
-       courtStore.fetchAll();
-       reservationStore.fetchAll();
-    })
 
 </script>
 

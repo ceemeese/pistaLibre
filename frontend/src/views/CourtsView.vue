@@ -26,11 +26,6 @@
         toast(result.message, {type: result.success ? 'success' : 'error',});
     }
 
-
-    onMounted( () => {
-        store.fetchAll();
-    })
-
 </script>
 
 

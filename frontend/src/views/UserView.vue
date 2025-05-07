@@ -19,6 +19,7 @@
     import Nav from '@/components/AppAdminNav.vue'
     import { useUsersStore } from '@/stores/userStore'
     import { useReservationsStore } from '@/stores/reservationStore'
+    import { useCourtsStore } from '@/stores/courtStore'
     import Chart from '../components/AppChartData.vue'
     import { onMounted, ref } from 'vue'
 
@@ -27,16 +28,17 @@
 
     const reservationPerMonth = ref<number[]>(new Array(12).fill(0));
 
-    onMounted(() => {
-    const reservationsUser = reservationStore.reservations.filter(r => r.userId === userStore.loggedUser?.id); 
 
-    reservationsUser.forEach(r => {
-        const month = new Date(r.date).getMonth(); // mes de reserva en numero
-        reservationPerMonth.value[month] += 1 
-        console.log('Reservation per Month desde padre', reservationPerMonth);
-        
+    onMounted(() => {
+        const reservationsUser = reservationStore.reservations.filter(r => r.userId === userStore.loggedUser?.id); 
+
+            reservationsUser.forEach(r => {
+                const month = new Date(r.date).getMonth(); // mes de reserva en numero
+                reservationPerMonth.value[month] += 1 
+                console.log('Reservation per Month desde padre', reservationPerMonth);           
+            });
     });
-});
+
 
 </script>
 

@@ -4,6 +4,8 @@ import UserView from '@/views/UserView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import { useUsersStore } from '@/stores/userStore';
+import { useReservationsStore } from '@/stores/reservationStore'
+import { useCourtsStore } from '@/stores/courtStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +74,25 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+router.beforeEach(async (to, from, next) => {
+  const reservationStore = useReservationsStore()
+  const userStore = useUsersStore()
+  const courtStore = useCourtsStore()
+
+  if (!reservationStore.isLoaded) {
+    await reservationStore.fetchAll()
+    console.log('Dato cargado del BeforeEach');
+  }
+  if (!userStore.isLoaded) {
+    await userStore.fetchAll()
+  }
+  if (!courtStore.isLoaded) {
+    await courtStore.fetchAll()
+  }
+
+  next()
+})
 
 
 export default router

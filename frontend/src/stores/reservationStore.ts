@@ -1,10 +1,11 @@
 import type { NewReservation, Reservation } from "@/types/reservation"
 import { defineStore } from "pinia"
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 
 export const useReservationsStore = defineStore('reservations', () => {
 
     const reservations = reactive(new Array<Reservation>())
+    const isLoaded = ref(false)
 
 
      async function fetchAll() {
@@ -158,6 +159,6 @@ export const useReservationsStore = defineStore('reservations', () => {
     
 
 
-    return { reservations, fetchAll, addReservation, modifyReservation, searchReservation, getReservationsByDateandTime, deleteReservation }
+    return { reservations, fetchAll, addReservation, modifyReservation, searchReservation, getReservationsByDateandTime, deleteReservation, isLoaded }
 })
 

@@ -1,10 +1,12 @@
 import type { Court, NewCourt } from "@/types/court";
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { isJSDocClassTag } from "typescript";
+import { reactive, ref } from "vue";
 
 export const useCourtsStore = defineStore('courts', () => {
 
     const courts = reactive(new Array<Court>())
+    const isLoaded = ref(false)
 
 
     async function fetchAll() {
@@ -127,6 +129,7 @@ export const useCourtsStore = defineStore('courts', () => {
 
 
 
-    return { courts, fetchAll, addCourt, modifyCourt, searchCourt, deleteCourt}
+    return { courts, fetchAll, addCourt, modifyCourt, searchCourt, deleteCourt, isLoaded
+    }
 
 })

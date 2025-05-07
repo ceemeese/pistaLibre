@@ -6,6 +6,7 @@ import type { Form } from '@/types/form'
 export const useUsersStore = defineStore('users', () => {
 
     const users = reactive(new Array<User>())
+    const isLoaded = ref(false)
 
     const storedUser = sessionStorage.getItem('loggedUser');
     const loggedUser = ref<User | null>(storedUser 
@@ -165,7 +166,7 @@ export const useUsersStore = defineStore('users', () => {
             sessionStorage.setItem('loggedUser', JSON.stringify(user));
             return true;
         } else {
-            console.log('backend no encontrado');
+            console.log('No encontrado');
             return false;
         }
     }
@@ -183,5 +184,5 @@ export const useUsersStore = defineStore('users', () => {
     }, { immediate: true });
 
 
-  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser, isAdmin, deleteUser}
+  return { users, fetchAll, addUser, modifyUser, searchUser, isAuthenticated, login, logout, loggedUser, isAdmin, deleteUser, isLoaded}
 })

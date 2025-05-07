@@ -17,7 +17,6 @@
     import { toast } from 'vue3-toastify'
     import type { UserResult } from '@/types/user'
     import { userHeader } from '@/types/table';
-import { onMounted } from 'vue';
 
     const store = useUsersStore()
 
@@ -26,10 +25,6 @@ import { onMounted } from 'vue';
         const result: UserResult = await store.deleteUser(id);
         toast(result.message, {type: result.success ? 'success' : 'error',});
     }
-
-    onMounted( () => {
-        store.fetchAll();
-    })
 
 </script>
 
