@@ -14,16 +14,16 @@ export const reservationHeaderAdmin: Header[] = [
     { text: 'Pista', value: 'court' },
     { text: 'Usuario', value: 'user' },
     { text: 'Fecha', value: 'date' },
-    { text: 'Hora inicio', value: 'startTime' },
-    { text: 'Hora fin', value: 'endTime' },
+    { text: 'Inicio', value: 'startTime' },
+    { text: 'Fin', value: 'endTime' },
 ]
 
 
 export const reservationHeaderUser: Header[] = [
     { text: 'Pista', value: 'court' },
     { text: 'Fecha', value: 'date' },
-    { text: 'Hora inicio', value: 'startTime' },
-    { text: 'Hora fin', value: 'endTime' },
+    { text: 'Inicio', value: 'startTime' },
+    { text: 'Fin', value: 'endTime' },
 ]
 
 

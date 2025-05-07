@@ -2,7 +2,7 @@
     <v-container>
       <!-- Gráfico de barras solo en pantallas grandes -->
       <v-row>
-        <v-col class="d-none d-md-flex" cols="12">
+        <v-col cols="12">
           <Bar :data="chartData" :options="chartOptions" />
         </v-col>
       </v-row>

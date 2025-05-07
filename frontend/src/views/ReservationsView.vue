@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="d-flex flex-column">
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Reservas</h1>
         <AppDateTable
             v-if="formattedItems.length > 0"
@@ -7,6 +7,7 @@
             :items="formattedItems"
             @delete-item="handleDeleteItem"
         />
+        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto" color="black">Atrás</v-btn>
     </v-container>
 </template>
 
