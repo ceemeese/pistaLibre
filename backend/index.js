@@ -99,12 +99,13 @@ app.delete('/users/:id', (req, res) => {
 
 //COURTS
 let courts = []
+const names = ['Cupra', 'Estrella Damm', 'Nox', 'Head', 'Adeslas', 'Joma']
 
 function initCourts() {
-    for (let i = 0; i<6; i++) {
+    for (let i = 0; i < names.length; i++) {
         courts.push({
             id: 1 + i,
-            name: `Pista ${i+1}`,
+            name: `Pista ${names[i]}`,
             indoor: faker.datatype.boolean(),
             active: true
         })
