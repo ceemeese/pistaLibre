@@ -37,8 +37,11 @@
     })
 
 
-    const formattedItems = computed( () => {
-        return reservationStore.reservations.map(r => {
+    const formattedItems = computed( () =>
+    
+        reservationStore.reservations
+        .filter(r => userStore.isAdmin || r.userId === userStore.loggedUser?.id)
+        .map(r => {
 
             const courtItem : Court  = courtStore.courts.find(c => c.id === r.courtId)!;
             const userItem : User  = userStore.users.find(u => u.id === r.userId)!;
@@ -53,9 +56,10 @@
                 date: dateFormatted,
                 startTime: initialHourFormatted,
                 endTime: endHourFormatted,
-            };
+            }
+            
         })
-    })
+    )
 
 
     const handleDeleteItem = async (id: number) => {
