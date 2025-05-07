@@ -53,9 +53,9 @@
         maintainAspectRatio: false,
         scales: {
           y: {
-            beginAtZero: true,     // Empieza desde 0
+            beginAtZero: true,     
             ticks: {
-              stepSize: 1          // Escala con pasos de 1 (si tus datos son enteros)
+              stepSize: 1
             }
           }
         }
