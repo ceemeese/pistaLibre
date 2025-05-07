@@ -9,10 +9,18 @@ export interface Item {
 }
 
 
-export const reservationHeader: Header[] = [
+export const reservationHeaderAdmin: Header[] = [
     { text: 'ID', value: 'id' },
     { text: 'Pista', value: 'court' },
     { text: 'Usuario', value: 'user' },
+    { text: 'Fecha', value: 'date' },
+    { text: 'Hora inicio', value: 'startTime' },
+    { text: 'Hora fin', value: 'endTime' },
+]
+
+
+export const reservationHeaderUser: Header[] = [
+    { text: 'Pista', value: 'court' },
     { text: 'Fecha', value: 'date' },
     { text: 'Hora inicio', value: 'startTime' },
     { text: 'Hora fin', value: 'endTime' },

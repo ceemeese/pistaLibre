@@ -3,7 +3,7 @@
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Reservas</h1>
         <AppDateTable
             v-if="formattedItems.length > 0"
-            :headers="reservationHeader"
+            :headers="headerTab"
             :items="formattedItems"
             @delete-item="handleDeleteItem"
         />
@@ -22,16 +22,26 @@
     import { useUsersStore } from '@/stores/userStore';
     import type { Court } from '@/types/court';
     import type { User } from '@/types/user';
-    import { reservationHeader } from '@/types/table';
+    import { reservationHeaderAdmin, reservationHeaderUser, } from '@/types/table';
 
 
     const reservationStore = useReservationsStore();
     const courtStore = useCourtsStore();
     const userStore = useUsersStore();
 
+    
+    const headerTab = computed ( () => {
+        return userStore.isAdmin
+        ? reservationHeaderAdmin
+        : reservationHeaderUser
+    })
 
-    const formattedItems = computed( () => {
-        return reservationStore.reservations.map(r => {
+
+    const formattedItems = computed( () =>
+    
+        reservationStore.reservations
+        .filter(r => userStore.isAdmin || r.userId === userStore.loggedUser?.id)
+        .map(r => {
 
             const courtItem : Court  = courtStore.courts.find(c => c.id === r.courtId)!;
             const userItem : User  = userStore.users.find(u => u.id === r.userId)!;
@@ -46,9 +56,10 @@
                 date: dateFormatted,
                 startTime: initialHourFormatted,
                 endTime: endHourFormatted,
-            };
+            }
+            
         })
-    })
+    )
 
 
     const handleDeleteItem = async (id: number) => {
