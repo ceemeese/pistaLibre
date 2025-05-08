@@ -16,7 +16,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/admin/users',
+      path: '/users',
       name: 'users',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -25,16 +25,16 @@ const router = createRouter({
       meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
-      path: '/admin/courts',
+      path: '/courts',
       name: 'courts',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/CourtsView.vue'),
-      meta: { requiresAuth: true, requiresAdmin: true }
+      meta: { requiresAuth: true }
     },
     {
-      path: '/admin/reservations',
+      path: '/user/:id/reservations',
       name: 'reservations',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -43,9 +43,9 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: '/user',
+      path: '/user/:id',
       name: 'user',
-      component: UserView,
+      component: () => import('@/views/UserView.vue'),
       meta: { requiresAuth: true }
     },
     {

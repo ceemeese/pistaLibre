@@ -97,7 +97,7 @@
       { title: 'Home', to: '/', icon: 'mdi-home' },
 
       store.isAuthenticated
-      ? { title: 'Perfil', to: '/user', icon: 'mdi-account-circle' }
+      ? { title: 'Perfil', to: '/user/' + store.loggedUser?.id , icon: 'mdi-account-circle' }
       : { title: 'Iniciar sesión', to: '/login', icon: 'mdi-account' }
     ]
   })

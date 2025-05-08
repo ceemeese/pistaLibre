@@ -7,20 +7,20 @@ f<template>
       >
 
         
-        <v-btn v-if="store.isAdmin" to="/admin/users">
+        <v-btn v-if="store.isAdmin" to="/users">
           <v-icon>mdi-account-circle</v-icon>
   
           Usuarios
         </v-btn>
   
       
-        <v-btn v-if="store.isAdmin" to="/admin/courts">
+        <v-btn to="/courts">
           <v-icon>mdi-tennis</v-icon>
   
           Pistas
         </v-btn>
   
-        <v-btn to="/admin/reservations">
+        <v-btn :to="`/user/${store.loggedUser?.id}/reservations`">
           <v-icon>mdi-calendar</v-icon>
   
           Reservas

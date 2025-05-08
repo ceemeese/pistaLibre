@@ -13,7 +13,7 @@
             />
             <v-btn type="submit">Login</v-btn>
             </v-form>
-            <p class="mt-5">¿No tienes cuenta? <router-link to="/register">Regístrate aquí</router-link></p>
+            <p class="mt-5">¿No tienes cuenta? <router-link :to="{ name: 'register', params: { type: 'user' } }">Regístrate aquí</router-link></p>
         </v-card>
     </v-container>
 </template>
@@ -24,6 +24,7 @@
   import router from "@/router";
   import { form } from "@/types/form";
   import { toast } from "vue3-toastify";
+  import { userHeader } from "@/types/table";
   
 
   const store = useUsersStore();

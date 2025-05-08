@@ -19,12 +19,15 @@
     import Nav from '@/components/AppAdminNav.vue'
     import { useUsersStore } from '@/stores/userStore'
     import { useReservationsStore } from '@/stores/reservationStore'
-    import { useCourtsStore } from '@/stores/courtStore'
     import Chart from '../components/AppChartData.vue'
-    import { onMounted, ref } from 'vue'
+    import { computed, onMounted, ref } from 'vue'
+    import { useRoute } from 'vue-router';
 
     const userStore = useUsersStore();
     const reservationStore = useReservationsStore();
+
+    const route = useRoute();
+    const id = Number(route.params.id);
 
     const reservationPerMonth = ref<number[]>(new Array(12).fill(0));
 
@@ -38,7 +41,6 @@
                 console.log('Reservation per Month desde padre', reservationPerMonth);           
             });
     });
-
 
 </script>
 

@@ -1,6 +1,5 @@
 <template>
     <v-container >
-        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Registro</h1>
         <v-card class="mx-auto px-6 py-8" max-width="350">
             <v-form>
                 <v-text-field

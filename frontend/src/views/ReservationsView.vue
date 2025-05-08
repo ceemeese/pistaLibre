@@ -1,5 +1,5 @@
 <template>
-    <v-container class="d-flex flex-column">
+    <v-container class="d-flex flex-column text-center">
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Reservas</h1>
         <AppDateTable
             v-if="formattedItems.length > 0"
@@ -7,13 +7,14 @@
             :items="formattedItems"
             @delete-item="handleDeleteItem"
         />
-        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto" color="black">Atrás</v-btn>
+        <div v-else class="text-center">No tienes reservas</div>
+        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto bottom-0" color="black">Atrás</v-btn>
     </v-container>
 </template>
 
 <script setup lang="ts">
 
-    import { computed, onMounted} from 'vue'
+    import { computed } from 'vue'
     import { useReservationsStore } from '@/stores/reservationStore'
     import AppDateTable from '@/components/AppDateTable.vue'
     import { toast } from 'vue3-toastify';
