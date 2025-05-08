@@ -1,11 +1,12 @@
 <template>
-    <v-container>
+    <v-container class="d-flex flex-column">
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Usuarios</h1>
         <AppDateTable
             :headers="userHeader"
             :items="store.users"
             @delete-item="handleDeleteItem"
         />
+        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto" color="black">Atrás</v-btn>
     </v-container>
 </template>
 
@@ -16,7 +17,6 @@
     import { toast } from 'vue3-toastify'
     import type { UserResult } from '@/types/user'
     import { userHeader } from '@/types/table';
-import { onMounted } from 'vue';
 
     const store = useUsersStore()
 
@@ -25,10 +25,6 @@ import { onMounted } from 'vue';
         const result: UserResult = await store.deleteUser(id);
         toast(result.message, {type: result.success ? 'success' : 'error',});
     }
-
-    onMounted( () => {
-        store.fetchAll();
-    })
 
 </script>
 

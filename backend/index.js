@@ -99,12 +99,13 @@ app.delete('/users/:id', (req, res) => {
 
 //COURTS
 let courts = []
+const names = ['Cupra', 'Estrella Damm', 'Nox', 'Head', 'Adeslas', 'Joma']
 
 function initCourts() {
-    for (let i = 0; i<6; i++) {
+    for (let i = 0; i < names.length; i++) {
         courts.push({
             id: 1 + i,
-            name: `Pista ${i+1}`,
+            name: `Pista ${names[i]}`,
             indoor: faker.datatype.boolean(),
             active: true
         })
@@ -152,7 +153,7 @@ app.post('/courts', (req, res) => {
     court.id = courts.length > 0 ? Math.max(...courts.map(c => c.id)) + 1 : 1;
     console.log(`Pista ${JSON.stringify(court)}`)
     courts.push(court)
-    res.sendStatus(201)
+    res.status(201).json(court)
 })
 
 

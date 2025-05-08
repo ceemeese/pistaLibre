@@ -12,3 +12,16 @@
         email: '',
         password: ''
     }
+
+
+    export interface StateCourt {
+        name: string,
+        indoor: boolean,
+        panoramic: boolean,
+    }
+
+    export const initialCourtState: StateCourt = {
+        name: '',
+        indoor: false,
+        panoramic: false,
+    }

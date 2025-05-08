@@ -1,10 +1,12 @@
 import type { Court, NewCourt } from "@/types/court";
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { isJSDocClassTag } from "typescript";
+import { reactive, ref } from "vue";
 
 export const useCourtsStore = defineStore('courts', () => {
 
     const courts = reactive(new Array<Court>())
+    const isLoaded = ref(false)
 
 
     async function fetchAll() {
@@ -46,9 +48,14 @@ export const useCourtsStore = defineStore('courts', () => {
                 const newCourt = { ...data }
                 courts.push(newCourt)
                 console.log('Pista registrada correctamente:', data);
+                return { success: true, message: 'Pista registrada correctamente' };
+            } else {
+                console.log('Error al registrar pista');
+                return { success: false, message: 'Error al registrar pista' };
             }
         } catch (error) {
             console.log('Error:', error);
+            return  { success: false, message: 'Error en la conexión con el servidor' };
         }  
 
     }
@@ -127,6 +134,7 @@ export const useCourtsStore = defineStore('courts', () => {
 
 
 
-    return { courts, fetchAll, addCourt, modifyCourt, searchCourt, deleteCourt}
+    return { courts, fetchAll, addCourt, modifyCourt, searchCourt, deleteCourt, isLoaded
+    }
 
 })

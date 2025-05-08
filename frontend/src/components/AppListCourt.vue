@@ -1,6 +1,6 @@
 <template>
   <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Pistas disponibles</h1>
-  <div v-if="filteredCourts.length === 0" class="no-courts-message">
+  <div v-if="filteredCourts.length === 0" class="no-courts-message text-center">
       No hay pistas disponibles para el horario seleccionado.
     </div>
     <v-row dense class="mt-15 mb-15">

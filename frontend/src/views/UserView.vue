@@ -2,10 +2,13 @@
     <v-container>
         <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Perfil de usuario</h1>
         <Info />
-        <Chart
-            :reservationPerMonth="reservationPerMonth" 
-        />
-        <NavAdmin  />
+        <v-container class="d-none d-md-flex flex-column">
+            <h5 class="text-h5 text-md-h5 mb-md-3 text-center mt-md-3">Últimos tres meses</h5>
+            <Chart
+                :reservationPerMonth="reservationPerMonth" 
+            />
+        </v-container>
+        <Nav class="mb-3"  />
     </v-container>
 
 </template>
@@ -13,9 +16,10 @@
 <script setup lang="ts">
 
     import Info from '@/components/AppUserInfo.vue'
-    import NavAdmin from '@/components/AppAdminNav.vue'
+    import Nav from '@/components/AppAdminNav.vue'
     import { useUsersStore } from '@/stores/userStore'
     import { useReservationsStore } from '@/stores/reservationStore'
+    import { useCourtsStore } from '@/stores/courtStore'
     import Chart from '../components/AppChartData.vue'
     import { onMounted, ref } from 'vue'
 
@@ -24,16 +28,17 @@
 
     const reservationPerMonth = ref<number[]>(new Array(12).fill(0));
 
-    onMounted(() => {
-    const reservationsUser = reservationStore.reservations.filter(r => r.userId === userStore.loggedUser?.id); 
 
-    reservationsUser.forEach(r => {
-        const month = new Date(r.date).getMonth(); // mes de reserva en numero
-        reservationPerMonth.value[month] += 1 
-        console.log('Reservation per Month desde padre', reservationPerMonth);
-        
+    onMounted(() => {
+        const reservationsUser = reservationStore.reservations.filter(r => r.userId === userStore.loggedUser?.id); 
+
+            reservationsUser.forEach(r => {
+                const month = new Date(r.date).getMonth(); // mes de reserva en numero
+                reservationPerMonth.value[month] += 1 
+                console.log('Reservation per Month desde padre', reservationPerMonth);           
+            });
     });
-});
+
 
 </script>
 

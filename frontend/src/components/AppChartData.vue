@@ -1,8 +1,8 @@
 <template>
-    <v-container>
+    <v-container class="chart-container">
       <!-- Gráfico de barras solo en pantallas grandes -->
       <v-row>
-        <v-col class="d-none d-md-flex" cols="12">
+        <v-col cols="12">
           <Bar :data="chartData" :options="chartOptions" />
         </v-col>
       </v-row>
@@ -50,7 +50,15 @@
 
     const chartOptions = {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,     
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
     };
 
     watch(() => reservationPerMonth, (newVal) => {
@@ -61,10 +69,10 @@
   </script>
   
   <style scoped>
-  .chart-container {
-    position: relative;
-    width: 100%;
-    height: 300px;
-  }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+    }
   </style>
   

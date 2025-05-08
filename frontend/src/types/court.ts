@@ -1,6 +1,7 @@
 export interface NewCourt {
     name: string,
     indoor: boolean, 
+    panoramic: boolean,
 }
 
 

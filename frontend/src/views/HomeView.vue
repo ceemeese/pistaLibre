@@ -114,11 +114,4 @@
   }
 
 
-  
-  onMounted( () => {
-    userStore.fetchAll();
-    reservationStore.fetchAll();
-    courtStore.fetchAll();
-  })
-
 </script>
