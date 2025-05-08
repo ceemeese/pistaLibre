@@ -6,7 +6,10 @@
             :items="itemsCourt"
             @delete-item="handleDeleteItem"
         />
-        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto" color="black">Atrás</v-btn>
+        <v-container class="d-flex justify-center">
+            <v-btn clas @click="router.push({ name: 'register', params: { type: 'court' } })" class="elevation-4 rounded-xl mt-6 mr-4" color="black">Registrar</v-btn>
+            <v-btn @click="router.back()" class="elevation-4 rounded-xl mt-6" color="black">Atrás</v-btn>
+        </v-container>
     </v-container>
 </template>
 
@@ -18,9 +21,10 @@
     import type { CourtResult } from '@/types/court';
     import { courtHeader } from '@/types/table';
     import { computed } from 'vue';
+    import { useRouter } from 'vue-router';
 
     const store = useCourtsStore();
-
+    const router = useRouter()
 
     const itemsCourt = computed(() => {
         return store.courts.map(court => ({

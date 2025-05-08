@@ -153,7 +153,7 @@ app.post('/courts', (req, res) => {
     court.id = courts.length > 0 ? Math.max(...courts.map(c => c.id)) + 1 : 1;
     console.log(`Pista ${JSON.stringify(court)}`)
     courts.push(court)
-    res.sendStatus(201)
+    res.status(201).json(court)
 })
 
 

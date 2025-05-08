@@ -48,9 +48,14 @@ export const useCourtsStore = defineStore('courts', () => {
                 const newCourt = { ...data }
                 courts.push(newCourt)
                 console.log('Pista registrada correctamente:', data);
+                return { success: true, message: 'Pista registrada correctamente' };
+            } else {
+                console.log('Error al registrar pista');
+                return { success: false, message: 'Error al registrar pista' };
             }
         } catch (error) {
             console.log('Error:', error);
+            return  { success: false, message: 'Error en la conexión con el servidor' };
         }  
 
     }
