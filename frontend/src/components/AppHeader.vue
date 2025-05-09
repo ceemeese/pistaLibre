@@ -74,7 +74,7 @@
         <template #prepend>
           <v-icon>mdi-login</v-icon>
         </template>
-        <v-list-item-title>Logout</v-list-item-title>
+        <v-list-item-title>{{ t('closeSession') }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -86,7 +86,10 @@
   import { useRouter } from 'vue-router'
   import { toast } from 'vue3-toastify'
   import type { NavItems } from '@/types/nav'
+  import { useI18n } from 'vue-i18n'
 
+
+  const { t } = useI18n()
   const store = useUsersStore()
   const router = useRouter()
 
@@ -97,15 +100,15 @@
       { title: 'Home', to: '/', icon: 'mdi-home' },
 
       store.isAuthenticated
-      ? { title: 'Perfil', to: '/user/' + store.loggedUser?.id , icon: 'mdi-account-circle' }
-      : { title: 'Iniciar sesión', to: '/login', icon: 'mdi-account' }
+      ? { title: t('profile'), to: '/user/' + store.loggedUser?.id , icon: 'mdi-account-circle' }
+      : { title: t('login'), to: '/login', icon: 'mdi-account' }
     ]
   })
 
 
   const handleLogout = () => {
     
-    toast("Cerrando sesión", {
+    toast( t('closingSession'), {
       type: "default",
       onClose: () => {
         store.logout();

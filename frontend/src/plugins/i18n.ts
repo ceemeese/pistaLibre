@@ -30,7 +30,13 @@ const messages = {
         email: 'Email',
         id: 'ID', 
         back: 'Atrás',
-        messageReservation: 'No tienes reservas'
+        messageReservation: 'No tienes reservas',
+        slogan: 'Juega más, reserva mejor. Tu pista, siempre lista',
+        closingSession: 'Cerrando sesión',
+        profile: 'Perfil',
+        login: "Iniciar sesión",
+        closeSession: 'Cerrar Sessión',
+    
     }
     ,
     en: {
@@ -58,7 +64,12 @@ const messages = {
         email: 'Email',
         id: 'ID',
         back: 'Back',
-        messageReservation: "You don't have any reservations"
+        messageReservation: "You don't have any reservations",
+        slogan: 'Play more, book better. Your court, always ready',
+        closingSession: 'Logging out',
+        profile: 'Profile',
+        login: 'Log in',
+        closeSession: 'Log out',
     },
         it: {
         hello: 'hello world',
@@ -85,7 +96,12 @@ const messages = {
         email: 'Email',
         id: 'ID',
         back: 'Indietro',
-        messageReservation: "Non hai prenotazioni"
+        messageReservation: "Non hai prenotazioni",
+        slogan: 'Gioca di più, prenota meglio. Il tuo campo, sempre pronto',
+        closingSession: 'Disconnessione in corso',
+        profile: 'Profilo',
+        login: 'Accedi',
+        closeSession: 'Disconnetti',
     },
 
 }
