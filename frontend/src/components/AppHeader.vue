@@ -14,7 +14,7 @@
     <v-spacer />
 
     <!-- Menú escritorio -->
-    <div class="d-none d-sm-flex">
+    <div class="d-none d-sm-flex justify-center align-center">
       <v-btn
         v-for="item in items"
         :key="item.title"
@@ -27,9 +27,21 @@
         <v-icon start>{{ item.icon }}</v-icon>
         {{ item.title }}
       </v-btn>
+      
     </div>
 
     <!-- Acciones -->
+    <v-select
+        v-model="selectedLanguage"
+        :items="languages"
+        item-title="label"
+        item-value="code"
+        return-object
+        density="compact"
+        hide-details
+        class="mx-2 select-idiom"
+        @update:modelValue="changeLanguage"
+      />
     <v-btn icon aria-label="Buscar">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -74,7 +86,7 @@
         <template #prepend>
           <v-icon>mdi-login</v-icon>
         </template>
-        <v-list-item-title>Logout</v-list-item-title>
+        <v-list-item-title>{{ t('closeSession') }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -86,26 +98,46 @@
   import { useRouter } from 'vue-router'
   import { toast } from 'vue3-toastify'
   import type { NavItems } from '@/types/nav'
+  import { useI18n } from 'vue-i18n'
 
+  const { locale } = useI18n()
+  const languages = [
+    { code: 'es', label: '🇪🇸 ' },
+    { code: 'en', label: '🇬🇧' },
+    { code: 'it', label: '🇮🇹' }
+  ]
+  
+
+
+  const { t } = useI18n()
   const store = useUsersStore()
   const router = useRouter()
 
   const drawer = ref(<boolean>false)
 
+  //idioma
+  const selectedLanguage = ref(languages.find(lang => lang.code === locale.value))
+
+  const changeLanguage = (language: { code: string; label: string }) => {
+    locale.value = language.code
+  }
+
+
+  
   const items = computed<NavItems[]>( () => {
     return [
       { title: 'Home', to: '/', icon: 'mdi-home' },
 
       store.isAuthenticated
-      ? { title: 'Perfil', to: '/user/' + store.loggedUser?.id , icon: 'mdi-account-circle' }
-      : { title: 'Iniciar sesión', to: '/login', icon: 'mdi-account' }
+      ? { title: t('profile'), to: '/user/' + store.loggedUser?.id , icon: 'mdi-account-circle' }
+      : { title: t('login'), to: '/login', icon: 'mdi-account' }
     ]
   })
 
 
   const handleLogout = () => {
     
-    toast("Cerrando sesión", {
+    toast( t('closingSession'), {
       type: "default",
       onClose: () => {
         store.logout();
@@ -115,3 +147,11 @@
       
   }
 </script>
+
+
+<style scoped>
+
+  .select-idiom{
+    max-width: 75px;
+  }
+</style>

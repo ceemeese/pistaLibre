@@ -14,7 +14,7 @@
         <v-divider class="my-1 mx-auto" thickness="2" width="50"></v-divider>
     
         <div class="text-caption font-weight-regular opacity-60">
-            Juega más, reserva mejor. Tu pista, siempre lista.
+          {{ t("slogan") }}
         </div>
     
         <v-divider class="my-2" color="white"></v-divider>
@@ -27,6 +27,10 @@
   </template>
 
 <script setup lang="ts">
+
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
   const icons = [
     'mdi-facebook',

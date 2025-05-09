@@ -49,14 +49,14 @@ export const useReservationsStore = defineStore('reservations', () => {
                     const newReservation = { ...data }
                     reservations.push(newReservation)
                     console.log('Reserva registrada correctamente:', data);
-                    return { success: true, message: 'Reserva registrada correctamente' };
+                    return { success: true, message: 'okReservation' };
                 } else {
                     console.log('Error al registrar la reserva');
-                    return { success: false, message: 'Error al registrar la reserva' };
+                    return { success: false, message: 'koReservation' };
                 }
             } catch (error) {
                 console.log('Error:', error);
-                return  { success: false, message: 'Error en la conexión con el servidor' };
+                return  { success: false, message: 'koConection' };
             } 
 
         }
@@ -123,15 +123,15 @@ export const useReservationsStore = defineStore('reservations', () => {
                         reservations.splice(index, 1);
                     }
                     console.log('Reserva eliminada correctamente');
-                    return { success: true, message: 'Reserva eliminada' };
+                    return { success: true, message: 'okDeleteReservation' };
                 } else {
                     console.log('Error al eliminar la reserva');
-                    return { success: false, message: 'Error al eliminar reserva' };
+                    return { success: false, message: 'koDeleteReservation' };
                 }
                 
             } catch (error) {
                 console.log('Error: ', error);
-                return  { success: false, message: 'Error en la conexión con el servidor' };
+                return  { success: false, message: 'koConection' };
             }
         }
 

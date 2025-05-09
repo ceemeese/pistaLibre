@@ -1,7 +1,7 @@
 <template>
-  <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Pistas disponibles</h1>
+  <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10"> {{ t('courtDisponibility') }}</h1>
   <div v-if="filteredCourts.length === 0" class="text-center">
-      No hay pistas disponibles para el horario seleccionado
+    {{ t('noDisponibility') }}
     </div>
     <v-row dense class="mt-15 mb-15">
       <v-col
@@ -24,7 +24,7 @@
             >
             </v-img>
             <template v-slot:actions>
-                <v-btn @click="selectCourt(court.id)" text="RESERVA"></v-btn>
+                <v-btn @click="selectCourt(court.id)">{{ t('book') }}</v-btn>
             </template>
         </v-card>
   
@@ -36,8 +36,10 @@
 
   import { useCourtsStore } from '@/stores/courtStore';
   import { useReservationsStore } from '@/stores/reservationStore';
-  import { computed, onMounted, watch } from 'vue';
+  import { computed, watch } from 'vue';
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n()
   const courtsStore = useCourtsStore();
   const reservationsStore = useReservationsStore();
 

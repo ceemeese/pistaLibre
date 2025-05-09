@@ -5,7 +5,7 @@
           <th v-for="header in headers" :key="header.text" class="text-center">
             {{ header.text }}
           </th>
-          <th v-if="userStore.isAdmin" class="text-center">Acciones</th>
+          <th v-if="userStore.isAdmin" class="text-center"> {{ t("actions") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -28,9 +28,11 @@
   
   <script setup lang="ts">
 
+    import { useI18n } from 'vue-i18n'
     import type { Header, Item } from '@/types/table';
     import { useUsersStore } from '@/stores/userStore'
 
+    const { t } = useI18n()
     const userStore = useUsersStore();
   
     //Se traen del padre UsersView para mostrar
@@ -48,6 +50,7 @@
     const handleDelete = (id: number) => {
       emit('delete-item', id)
     }
+    
 
   </script>
   
