@@ -26,7 +26,7 @@ import { computed } from 'vue';
 
     const handleDeleteItem = async (id: number) => {
         const result: UserResult = await store.deleteUser(id);
-        toast(result.message, {type: result.success ? 'success' : 'error',});
+        toast(t(result.message), {type: result.success ? 'success' : 'error',});
     }
 
 

@@ -93,7 +93,7 @@
     
       const result: ReservationResult = await reservationStore.addReservation(newReservation);
 
-      toast(result.message, {type: result.success ? 'success' : 'error',});
+      toast(t(result.message), {type: result.success ? 'success' : 'error',});
 
     } else {
       console.log("Alguno de los campos está vacío");

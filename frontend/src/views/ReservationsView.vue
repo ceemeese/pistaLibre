@@ -67,7 +67,7 @@
 
     const handleDeleteItem = async (id: number) => {
         const result: ReservationResult = await reservationStore.deleteReservation(id);
-        toast(result.message, {type: result.success ? 'success' : 'error',});
+        toast(t(result.message), {type: result.success ? 'success' : 'error',});
     }
 
 

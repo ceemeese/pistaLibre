@@ -50,7 +50,20 @@ const messages = {
         cancel: 'Cancelar',
         saveChanges: 'Guardar cambios',
         userData: 'Datos personales',
-        okModified: 'Usuario modificado correctamente'
+        okModified: 'Usuario modificado correctamente',
+        okReservation: 'Reserva registrada correctamente',
+        koReservation: 'Error al registrar la reserva',
+        koConection: 'Error en la conexión con el servidor',
+        okDeleteReservation: 'Reserva eliminada',
+        koDeleteReservation: 'Error al eliminar reserva', 
+        okCourt: 'Pista registrada correctamente',
+        koCourt: 'Error al registrar pista',
+        okDeleteCourt: 'Pista eliminada',
+        koDeleteCourt: 'Error al eliminar la pista',
+        okUser: 'Usuario registrado correctamente',
+        koUser: 'Error al registrar usuario',
+        okDeleteUser: 'Usuario eliminado',
+        koDeleteUser: 'Error al eliminar usuario'
     }
     ,
     en: {
@@ -97,7 +110,20 @@ const messages = {
         cancel: 'Cancel',
         saveChanges: 'Save changes',
         userData: 'Personal data',
-        okModified: 'User modified successfully'
+        okModified: 'User modified successfully',
+        okReservation: 'Reservation successfully made',
+        koReservation: 'Error registering the reservation',
+        koConection: 'Error in the server connection', 
+        okDeleteReservation: 'Reservation deleted',
+        koDeleteReservation: 'Error deleting reservation',
+        okCourt: 'Court successfully registered',
+        koCourt: 'Error registering court',
+        okDeleteCourt: 'Court deleted',
+        koDeleteCourt: 'Error deleting court',
+        okUser: 'User successfully registered',
+        koUser: 'Error registering user',
+        okDeleteUser: 'User deleted',
+        koDeleteUser: 'Error deleting user'
     },
         it: {
         hello: 'hello world',
@@ -143,7 +169,22 @@ const messages = {
         cancel: 'Annulla',
         saveChanges: 'Salva le modifiche',
         userData: 'Dati personali',
-        okModified: 'Utente modificato con successo'
+        okModified: 'Utente modificato con successo',
+        okReservation: 'Prenotazione effettuata correttamente',
+        koReservation: 'Errore durante la registrazione della prenotazione',
+        koConection: 'Errore nella connessione al server',
+        okDeleteReservation: 'Prenotazione eliminata',
+        koDeleteReservation: 'Errore nell\'eliminare la prenotazione',
+        okCourt: 'Campo registrato correttamente',
+        koCourt: 'Errore durante la registrazione del campo',
+        okDeleteCourt: 'Campo eliminato ',
+        koDeleteCourt: "Errore durante l'eliminazione del campo",
+        okUser: 'Utente registrato correttamente',
+        koUser: "Errore durante la registrazione dell'utente",
+        okDeleteUser: 'Utente eliminato',
+        koDeleteUser: "Errore durante l'eliminazione dell'utente"
+        
+        
     },
 
 }

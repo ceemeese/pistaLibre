@@ -41,7 +41,7 @@
 
     const handleDeleteItem = async (id: number) => {
         const result: CourtResult = await store.deleteCourt(id);
-        toast(result.message, {type: result.success ? 'success' : 'error',});
+        toast(t(result.message), {type: result.success ? 'success' : 'error',});
     }
 
     const translatedHeaders = computed(() => {

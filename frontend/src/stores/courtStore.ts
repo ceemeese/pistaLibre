@@ -48,14 +48,14 @@ export const useCourtsStore = defineStore('courts', () => {
                 const newCourt = { ...data }
                 courts.push(newCourt)
                 console.log('Pista registrada correctamente:', data);
-                return { success: true, message: 'Pista registrada correctamente' };
+                return { success: true, message: 'okCourt' };
             } else {
                 console.log('Error al registrar pista');
-                return { success: false, message: 'Error al registrar pista' };
+                return { success: false, message: 'koCourt' };
             }
         } catch (error) {
             console.log('Error:', error);
-            return  { success: false, message: 'Error en la conexión con el servidor' };
+            return  { success: false, message: 'koConection' };
         }  
 
     }
@@ -120,15 +120,15 @@ export const useCourtsStore = defineStore('courts', () => {
                     courts.splice(index, 1);
                 }
                 console.log('Pista eliminada correctamente');
-                return { success: true, message: 'Pista eliminada' };
+                return { success: true, message: 'okDeleteCourt' };
             } else {
                 console.log('Error al eliminar la pista');
-                return { success: false, message: 'Error al eliminar la pista' };
+                return { success: false, message: 'koDeleteCourt' };
             }
             
         } catch (error) {
             console.log('Error: ', error);
-            return  { success: false, message: 'Error en la conexión con el servidor' };
+            return  { success: false, message: 'koConection' };
         }
     }
 

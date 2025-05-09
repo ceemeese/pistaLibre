@@ -88,7 +88,7 @@
 
             const result: CourtResult = await store.addCourt(newCourt);
 
-            toast(result.message, {
+            toast(t(result.message), {
                 type: result.success ? 'success' : 'error', 
             });
             

@@ -115,7 +115,7 @@
 
             const result: UserResult = await store.addUser(newUser);
 
-            toast(result.message, {
+            toast(t(result.message), {
                 type: result.success ? 'success' : 'error', 
                 onClose: () => {
                     clear()

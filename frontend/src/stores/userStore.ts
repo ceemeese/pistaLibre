@@ -60,15 +60,15 @@ export const useUsersStore = defineStore('users', () => {
                 const newUser = { ...data }
                 users.push(newUser)
                 console.log('Usuario registrados correctamente:', data);
-                return { success: true, message: 'Usuario registrado correctamente' };
+                return { success: true, message: 'okUser' };
             } else {
                 console.log('Error al registrar usuario');
-                return { success: false, message: 'Error al registrar usuario' };
+                return { success: false, message: 'koUser' };
             }
             
         } catch (error) {
             console.log('Error:', error);
-            return  { success: false, message: 'Error en la conexión con el servidor' };
+            return  { success: false, message: 'koConection' };
         }  
 
     }
@@ -139,15 +139,15 @@ export const useUsersStore = defineStore('users', () => {
                     users.splice(index, 1);
                 }
                 console.log('Usuario eliminado correctamente');
-                return { success: true, message: 'Usuario eliminado' };
+                return { success: true, message: 'okDeleteUser' };
             } else {
                 console.log('Error al eliminar el usuario');
-                return { success: false, message: 'Error al eliminar usuario' };
+                return { success: false, message: 'koDeleteUser' };
             }
             
         } catch (error) {
             console.log('Error: ', error);
-            return  { success: false, message: 'Error en la conexión con el servidor' };
+            return  { success: false, message: 'koConection' };
         }
     }
 
