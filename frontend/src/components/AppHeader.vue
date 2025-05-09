@@ -15,14 +15,6 @@
 
     <!-- Menú escritorio -->
     <div class="d-none d-sm-flex justify-center align-center">
-      <v-select
-        v-model="selectedLanguage"
-        :items="languages"
-        density="compact"
-        hide-details
-        class="mx-2 select-idiom"
-        @update:modelValue="changeLanguage"
-      />
       <v-btn
         v-for="item in items"
         :key="item.title"
@@ -39,6 +31,17 @@
     </div>
 
     <!-- Acciones -->
+    <v-select
+        v-model="selectedLanguage"
+        :items="languages"
+        item-title="label"
+        item-value="code"
+        return-object
+        density="compact"
+        hide-details
+        class="mx-2 select-idiom"
+        @update:modelValue="changeLanguage"
+      />
     <v-btn icon aria-label="Buscar">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -98,7 +101,12 @@
   import { useI18n } from 'vue-i18n'
 
   const { locale } = useI18n()
-  const languages = ['es', 'en', 'it']
+  const languages = [
+    { code: 'es', label: '🇪🇸 ' },
+    { code: 'en', label: '🇬🇧' },
+    { code: 'it', label: '🇮🇹' }
+  ]
+  
 
 
   const { t } = useI18n()
@@ -108,12 +116,14 @@
   const drawer = ref(<boolean>false)
 
   //idioma
-  const selectedLanguage = ref(locale.value)
+  const selectedLanguage = ref(languages.find(lang => lang.code === locale.value))
 
-  const changeLanguage = (language:string) => {
-    locale.value = language
+  const changeLanguage = (language: { code: string; label: string }) => {
+    locale.value = language.code
   }
 
+
+  
   const items = computed<NavItems[]>( () => {
     return [
       { title: 'Home', to: '/', icon: 'mdi-home' },
@@ -142,6 +152,6 @@
 <style scoped>
 
   .select-idiom{
-    max-width: 100px;
+    max-width: 75px;
   }
 </style>
