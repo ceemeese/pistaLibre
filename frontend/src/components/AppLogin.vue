@@ -1,19 +1,19 @@
 <template>
 
     <v-container>
-        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Login</h1>
+        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10"> {{ t('login') }}</h1>
         <v-card class="mx-auto px-6 py-8" max-width="350">
             <v-form  @submit.prevent="handleSubmit">
-            <v-text-field v-model="form.email" label="Email" name="email" />
+            <v-text-field v-model="form.email" :label="t('email')" name="email" />
             <v-text-field
                 v-model="form.password"
-                label="Contraseña"
+                :label="t('password')"
                 name="password"
                 type="password"
             />
-            <v-btn type="submit">Login</v-btn>
+            <v-btn type="submit">{{ t('login') }}</v-btn>
             </v-form>
-            <p class="mt-5">¿No tienes cuenta? <router-link :to="{ name: 'register', params: { type: 'user' } }">Regístrate aquí</router-link></p>
+            <p class="mt-5">{{ t('noAccount') }} <router-link :to="{ name: 'register', params: { type: 'user' } }"> {{ t('registerHere') }}   </router-link></p>
         </v-card>
     </v-container>
 </template>
@@ -24,9 +24,10 @@
   import router from "@/router";
   import { form } from "@/types/form";
   import { toast } from "vue3-toastify";
-  import { userHeader } from "@/types/table";
-  
+  import { useI18n } from 'vue-i18n'
 
+
+  const { t } = useI18n()
   const store = useUsersStore();
   const handleSubmit = async () => {
 
@@ -34,14 +35,14 @@
       const success =  await store.login(form)
 
       if (success) {
-        toast("Inicio de sesión correcto", {
+        toast(t('okLogin'), {
           type: "success",
           onClose: () => {
             router.push("/");
           },
         });
     } else {
-        toast("Usuario o contraseña incorrectos", {
+        toast(t('koLogin'), {
           type: "error",
           onClose: () => {
             form.email = "";
@@ -54,7 +55,7 @@
 
     } catch (error) {
       console.log("Error: ", error);
-      toast.error("Error al intentar iniciar sesión")
+      toast.error(t('errorLogin'))
     }
     
   };
