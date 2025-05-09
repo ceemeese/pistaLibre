@@ -1,9 +1,5 @@
-
-import { OperationCanceledException } from 'typescript'
 import { createI18n } from 'vue-i18n'
 
-
-type MessageSchema = typeof messages['es']
 
 const messages = {
     es: {
@@ -15,7 +11,7 @@ const messages = {
         book: 'Reserva',
         name: 'Nombre',
         indoor: 'Indoor',
-        isIndoor: '¿Es {indoor}?', 
+        isIndoor: '¿Es indoor?', 
         si: 'Sí',
         no: 'No',
         isPanoramic: '¿Es panorámica?',
@@ -35,6 +31,7 @@ const messages = {
         slogan: 'Juega más, reserva mejor. Tu pista, siempre lista',
         closingSession: 'Cerrando sesión',
         profile: 'Perfil',
+        profileUser: 'Perfil de usuario',
         login: "Iniciar sesión",
         closeSession: 'Cerrar Sessión',
         courtDisponibility: 'Pistas disponibles',
@@ -63,7 +60,9 @@ const messages = {
         okUser: 'Usuario registrado correctamente',
         koUser: 'Error al registrar usuario',
         okDeleteUser: 'Usuario eliminado',
-        koDeleteUser: 'Error al eliminar usuario'
+        koDeleteUser: 'Error al eliminar usuario',
+        lastMonths: 'Últimos tres meses',
+        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     }
     ,
     en: {
@@ -71,11 +70,11 @@ const messages = {
         user: 'User | Users',
         court: 'Court | Courts',
         reservation: 'Reservation | Reservations ',
-        subtitle: '{book} your courts quickly and easily',
+        subtitle: 'Book your courts quickly and easily',
         book: 'Book',
         name: 'Name',
         indoor: 'Indoor',
-        isIndoor: '¿Is it {indoor}?', 
+        isIndoor: '¿Is it indoor?', 
         si: 'Yes',
         no: 'No',
         isPanoramic: '¿Is it panoramic?',
@@ -95,6 +94,7 @@ const messages = {
         slogan: 'Play more, book better. Your court, always ready',
         closingSession: 'Logging out',
         profile: 'Profile',
+        profileUser: 'User profile',
         login: 'Log in',
         closeSession: 'Log out',
         courtDisponibility: 'Available courts',
@@ -123,18 +123,20 @@ const messages = {
         okUser: 'User successfully registered',
         koUser: 'Error registering user',
         okDeleteUser: 'User deleted',
-        koDeleteUser: 'Error deleting user'
+        koDeleteUser: 'Error deleting user',
+        lastMonths: 'Last three months',
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     },
         it: {
         hello: 'hello world',
         user: 'Utente | Utenti',
         court: 'Campo | Campi',
         reservation: 'Prenotazione | Prenotazioni',
-        subtitle: '{book} i tuoi campi in modo rapido e semplice',
+        subtitle: 'Prenota i tuoi campi in modo rapido e semplice',
         book: 'Prenota',
         name: 'Nome',
         indoor: 'Indoor',
-        isIndoor: '¿È {indoor}?', 
+        isIndoor: '¿È indoor?', 
         si: 'Sì',
         no: 'No',
         isPanoramic: 'È panoramica?',
@@ -154,6 +156,7 @@ const messages = {
         slogan: 'Gioca di più, prenota meglio. Il tuo campo, sempre pronto',
         closingSession: 'Disconnessione in corso',
         profile: 'Profilo',
+        profileUser: 'Profilo utente',
         login: 'Accedi',
         closeSession: 'Disconnetti',
         courtDisponibility: 'Campi disponibili',
@@ -182,12 +185,15 @@ const messages = {
         okUser: 'Utente registrato correttamente',
         koUser: "Errore durante la registrazione dell'utente",
         okDeleteUser: 'Utente eliminato',
-        koDeleteUser: "Errore durante l'eliminazione dell'utente"
-        
-        
-    },
+        koDeleteUser: "Errore durante l'eliminazione dell'utente"  ,
+        lastMonths: 'Ultimi tre mesi',
+        months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
 
+    },
 }
+
+
+type MessageSchema = typeof messages['es']
 
 const i18n = createI18n<[MessageSchema], 'es' | 'en' | 'it' >({
     legacy: false,
@@ -197,5 +203,18 @@ const i18n = createI18n<[MessageSchema], 'es' | 'en' | 'it' >({
   })
 
 
+  const changeLanguage = (language: 'es' | 'en' | 'it') => {
+    i18n.global.locale = language
+    localStorage.setItem('language', language)
+  }
+  
+
+const savedLanguage = localStorage.getItem('language')
+    if (savedLanguage) {
+    i18n.global.locale = savedLanguage as 'es' | 'en' | 'it'
+}
+
+
 
 export default i18n
+export { changeLanguage }

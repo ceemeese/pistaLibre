@@ -1,9 +1,9 @@
 <template>
     <v-container>
-        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Perfil de usuario</h1>
+        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10"> {{ t('profileUser') }} </h1>
         <Info />
         <v-container class="d-none d-md-flex flex-column">
-            <h5 class="text-h5 text-md-h5 mb-md-3 text-center mt-md-3">Últimos tres meses</h5>
+            <h5 class="text-h5 text-md-h5 mb-md-3 text-center mt-md-3"> {{ t('lastMonths') }}</h5>
             <Chart
                 :reservationPerMonth="reservationPerMonth" 
             />
@@ -22,7 +22,10 @@
     import Chart from '../components/AppChartData.vue'
     import { computed, onMounted, ref } from 'vue'
     import { useRoute } from 'vue-router';
+    import { useI18n } from 'vue-i18n'
 
+    const { t } = useI18n()
+    
     const userStore = useUsersStore();
     const reservationStore = useReservationsStore();
 

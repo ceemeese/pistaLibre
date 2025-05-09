@@ -1,6 +1,6 @@
 <template>
     <v-container class="chart-container">
-      <!-- Gráfico de barras solo en pantallas grandes -->
+      <!-- Gráfico de barras sólo en pantallas grandes -->
       <v-row>
         <v-col cols="12">
           <Bar :data="chartData" :options="chartOptions" />
@@ -13,6 +13,11 @@
     import { computed, watch } from 'vue'
     import { Bar } from 'vue-chartjs'
     import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+    import { useI18n } from 'vue-i18n'
+
+    const { t } = useI18n()
+    const { tm } = useI18n()
+    
 
     ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -24,7 +29,7 @@
     const chartData = computed(() => {
 
         const currentMonth = new Date().getMonth();
-        const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+        const months = tm('months')  
 
         //comprobar que no quede negativo el mes
         const lastThreeMonthsIndex = [
@@ -66,7 +71,7 @@
     }, { deep: true, immediate: true })
   
   
-  </script>
+</script>
   
   <style scoped>
     .chart-container {

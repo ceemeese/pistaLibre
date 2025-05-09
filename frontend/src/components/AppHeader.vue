@@ -14,7 +14,15 @@
     <v-spacer />
 
     <!-- Menú escritorio -->
-    <div class="d-none d-sm-flex">
+    <div class="d-none d-sm-flex justify-center align-center">
+      <v-select
+        v-model="selectedLanguage"
+        :items="languages"
+        density="compact"
+        hide-details
+        class="mx-2 select-idiom"
+        @update:modelValue="changeLanguage"
+      />
       <v-btn
         v-for="item in items"
         :key="item.title"
@@ -27,6 +35,7 @@
         <v-icon start>{{ item.icon }}</v-icon>
         {{ item.title }}
       </v-btn>
+      
     </div>
 
     <!-- Acciones -->
@@ -88,12 +97,22 @@
   import type { NavItems } from '@/types/nav'
   import { useI18n } from 'vue-i18n'
 
+  const { locale } = useI18n()
+  const languages = ['es', 'en', 'it']
+
 
   const { t } = useI18n()
   const store = useUsersStore()
   const router = useRouter()
 
   const drawer = ref(<boolean>false)
+
+  //idioma
+  const selectedLanguage = ref(locale.value)
+
+  const changeLanguage = (language:string) => {
+    locale.value = language
+  }
 
   const items = computed<NavItems[]>( () => {
     return [
@@ -118,3 +137,11 @@
       
   }
 </script>
+
+
+<style scoped>
+
+  .select-idiom{
+    max-width: 100px;
+  }
+</style>
