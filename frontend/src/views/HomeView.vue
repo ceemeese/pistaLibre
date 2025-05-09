@@ -27,7 +27,7 @@
 
 
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed } from 'vue'
   import Banner from '../components/AppBanner.vue'
   import Datepicker from '@/components/AppDatepicker.vue';
   import ListCourt from '@/components/AppListCourt.vue';
@@ -39,12 +39,15 @@
   import type { NewReservation, ReservationResult } from '@/types/reservation';
   import { useReservationsStore } from '@/stores/reservationStore';
   import { toast } from 'vue3-toastify';
+  import { useI18n } from 'vue-i18n'
+
 
 
   //Variables
   const userStore = useUsersStore();
   const courtStore = useCourtsStore();
   const reservationStore = useReservationsStore();
+  const { t } = useI18n() 
 
   //const datepickerRef = ref<HTMLElement | null>(null);
   const dateSelected = ref<Date| null>(null);

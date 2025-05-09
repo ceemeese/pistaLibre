@@ -1,5 +1,6 @@
 // src/plugins/vuetify.ts
 import { createVuetify, type ThemeDefinition } from 'vuetify'
+import { es, en, it } from 'vuetify/locale'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
@@ -31,4 +32,9 @@ export default createVuetify({
         myCustomLightTheme,
         },
     },
+    locale: {
+        locale: 'es',
+        fallback: 'en',
+        messages: { es, en, it },
+      }
 })

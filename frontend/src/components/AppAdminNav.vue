@@ -10,20 +10,20 @@ f<template>
         <v-btn v-if="store.isAdmin" to="/users">
           <v-icon>mdi-account-circle</v-icon>
   
-          Usuarios
+          {{ t('user', 2) }}
         </v-btn>
   
       
         <v-btn to="/courts">
           <v-icon>mdi-tennis</v-icon>
   
-          Pistas
+          {{ t('court', 2) }}
         </v-btn>
   
         <v-btn :to="`/user/${store.loggedUser?.id}/reservations`">
           <v-icon>mdi-calendar</v-icon>
   
-          Reservas
+          {{ t('reservation', 2) }}
         </v-btn>
       </v-bottom-navigation>
     </v-layout>
@@ -33,7 +33,9 @@ f<template>
 <script setup lang="ts">
   import { ref } from 'vue'
   import { useUsersStore } from '@/stores/userStore';
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n() 
   const store = useUsersStore();
 
   const value = ref(1)

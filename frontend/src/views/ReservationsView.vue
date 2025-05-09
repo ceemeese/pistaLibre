@@ -1,14 +1,14 @@
 <template>
     <v-container class="d-flex flex-column text-center">
-        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">Reservas</h1>
+        <h1 class="text-h4 text-md-h3 mb-6 mb-md-10 text-center mt-3 mt-md-10">{{ t("reservation", 2) }}</h1>
         <AppDateTable
             v-if="formattedItems.length > 0"
-            :headers="headerTab"
+            :headers="translatedHeaders"
             :items="formattedItems"
             @delete-item="handleDeleteItem"
         />
-        <div v-else class="text-center">No tienes reservas</div>
-        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto bottom-0" color="black">Atrás</v-btn>
+        <div v-else class="text-center">{{ t("messageReservation") }}</div>
+        <v-btn @click="$router.back()" class="elevation-4 rounded-xl mt-6 mx-auto bottom-0" color="black">{{ t("back") }}</v-btn>
     </v-container>
 </template>
 
@@ -25,8 +25,10 @@
     import type { Court } from '@/types/court';
     import type { User } from '@/types/user';
     import { reservationHeaderAdmin, reservationHeaderUser, } from '@/types/table';
+    import { useI18n } from 'vue-i18n'
 
 
+    const { t } = useI18n()
     const reservationStore = useReservationsStore();
     const courtStore = useCourtsStore();
     const userStore = useUsersStore();
@@ -67,6 +69,14 @@
         const result: ReservationResult = await reservationStore.deleteReservation(id);
         toast(result.message, {type: result.success ? 'success' : 'error',});
     }
+
+
+    const translatedHeaders = computed(() => {
+        return headerTab.value.map(header => ({
+            ...header,
+            text: t(`${header.text}`)
+        }))
+    })
 
 
 </script>

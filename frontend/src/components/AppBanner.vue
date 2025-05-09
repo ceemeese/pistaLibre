@@ -7,9 +7,9 @@
       >
         <div class="banner-overlay d-flex flex-column justify-center align-center text-center px-4">
           <h1 class="text-h4 text-md-h2 text-lg-h1 text-white font-weight-bold">Pista Libre</h1>
-          <p class="text-body-1 text-md-subtitle-1 text-lg-h5 text-white">Reserva tus pistas de forma rápida y sencilla</p>
+          <p class="text-body-1 text-md-subtitle-1 text-lg-h5 text-white"> {{ t("subtitle") }}</p>
           <v-btn @click="emit('scrollToDatepicker')" class="elevation-4 rounded-xl mt-6" color="black">
-            Reserva
+            {{ t("reservation") }}
           </v-btn>
         </div>
       </v-parallax>
@@ -18,6 +18,9 @@
   
   <script setup lang="ts">
  
+    import { useI18n } from 'vue-i18n'
+
+    const { t } = useI18n() 
     const bannerImage = new URL('@/assets/banner2.png', import.meta.url).href
 
     const emit = defineEmits<{

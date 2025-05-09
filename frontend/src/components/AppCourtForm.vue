@@ -6,7 +6,7 @@
                     v-model="state.name"
                     :counter="10"
                     :error-messages="v$.name.$errors.map(e => String(e.$message))"
-                    label="Nombre"
+                    :label="t('name')"
                     required
                     @blur="v$.name.$touch"
                     @input="v$.name.$touch"
@@ -15,20 +15,20 @@
 
                 <v-radio-group
                     v-model="state.indoor"
-                    label="¿Es indoor?"
+                    :label="t('isIndoor')"
                     class="mb-2"
                     >
-                    <v-radio label="Sí" :value="true"></v-radio>
-                    <v-radio label="No" :value="false"></v-radio>
+                    <v-radio :label="t('si')" :value="true"></v-radio>
+                    <v-radio :label="t('no')" :value="false"></v-radio>
                 </v-radio-group>
             
                 <v-radio-group
                     v-model="state.panoramic"
-                    label="¿Es panorámica?"
+                    :label="t('isPanoramic')" 
                     class="mb-2"
                     >
-                    <v-radio label="Sí" :value="true"></v-radio>
-                    <v-radio label="No" :value="false"></v-radio>
+                    <v-radio :label="t('si')" :value="true"></v-radio>
+                    <v-radio :label="t('no')" :value="false"></v-radio>
                 </v-radio-group>
 
                 <v-container class="d-flex justify-center">
@@ -36,10 +36,10 @@
                         class="me-4"
                         @click="submit"
                     >
-                        Confirmar
+                        {{ t('confirm') }}
                     </v-btn>
                     <v-btn @click="clear">
-                        Limpiar
+                        {{ t('clean') }}
                     </v-btn>
                 </v-container>
             </v-form>
@@ -56,10 +56,11 @@
     import { initialCourtState } from '@/types/state.ts';
     import type { StateCourt } from '@/types/state.ts';
     import { toast } from "vue3-toastify";
-    import router from '@/router';
     import { useCourtsStore } from '@/stores/courtStore';
     import type { CourtResult, NewCourt } from '@/types/court';
+    import { useI18n } from 'vue-i18n'
 
+    const { t } = useI18n() 
     const store = useCourtsStore();
     const state = reactive<StateCourt>({
         ...initialCourtState,
