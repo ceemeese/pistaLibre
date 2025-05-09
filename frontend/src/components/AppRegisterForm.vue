@@ -6,7 +6,7 @@
                     v-model="state.name"
                     :counter="10"
                     :error-messages="v$.name.$errors.map(e => String(e.$message))"
-                    label="Name"
+                    :label= "t('name')"
                     required
                     @blur="v$.name.$touch"
                     @input="v$.name.$touch"
@@ -16,7 +16,7 @@
                 <v-text-field
                     v-model="state.surname"
                     :error-messages="v$.surname.$errors.map(e => String(e.$message))"
-                    label="Apellidos"
+                    :label="t('surname')"
                     required
                     @blur="v$.surname.$touch"
                     @input="v$.surname.$touch"
@@ -26,7 +26,7 @@
                 <v-text-field
                     v-model="state.email"
                     :error-messages="v$.email.$errors.map(e => String(e.$message))"
-                    label="E-mail"
+                    :label="t('email')"
                     required
                     @blur="v$.email.$touch"
                     @input="v$.email.$touch"
@@ -37,7 +37,7 @@
                     v-model="state.password"
                     type="password"
                     :error-messages="v$.password.$errors.map(e => String(e.$message))"
-                    label="Contraseña"
+                    :label="t('password')"
                     required
                     @blur="v$.password.$touch"
                     @input="v$.password.$touch"
@@ -49,10 +49,10 @@
                     class="me-4"
                     @click="submit"
                 >
-                    Confirmar
+                    {{ t('confirm') }}
                 </v-btn>
                 <v-btn @click="clear">
-                    Limpiar
+                     {{ t('clean') }}
                 </v-btn>
             </v-form>
         </v-card>
@@ -69,8 +69,10 @@
     import { toast } from "vue3-toastify";
     import router from '@/router';
     import type { NewUser, UserResult } from '@/types/user';
+    import { useI18n } from 'vue-i18n'
 
-    //Variable reactiva de state
+
+    const { t } = useI18n()
     const state = reactive<State>({
         ...initialState,
     })
@@ -101,7 +103,7 @@
         try {
 
             if (isDuplicateEmail(newUser.email)) {
-                toast("Este correo ya está registrado", { 
+                toast(t('duplicated'), { 
                     type: "error", 
                     onClose: () => {
                         state.email = ''; 

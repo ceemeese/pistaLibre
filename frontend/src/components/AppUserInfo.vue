@@ -5,12 +5,12 @@
         <v-form @submit.prevent="submit" ref="form">
 
             <div class="mb-4">
-            <div class="text-subtitle-1 font-weight-medium">Nombre</div>
+            <div class="text-subtitle-1 font-weight-medium">{{ t('name') }}</div>
             <div class="text-body-1">{{ name }}</div>
             </div>
    
             <v-text-field
-            label="Correo electrónico"
+            :label="t('email')"
             v-model="emailForm"
             :error-messages="v$.email.$errors.map(e => String(e.$message))"
             required
@@ -21,7 +21,7 @@
             />
 
             <v-text-field
-            label="Contraseña"
+            :label="t('password')"
             type="password"
             name="password"
             v-model="passwordForm"
@@ -33,7 +33,7 @@
             class="mb-4"
             />
 
-            <v-btn color="primary" type="submit">Guardar cambios</v-btn>
+            <v-btn color="primary" type="submit">{{ t('saveChanges') }}</v-btn>
 
         </v-form>
         </v-card-text>
@@ -41,12 +41,15 @@
 </template>
   
 <script setup lang="ts">
-    import { reactive, ref, watch } from 'vue';
+    import { reactive, ref} from 'vue';
     import { useVuelidate } from '@vuelidate/core';
     import { required, email } from '@vuelidate/validators';
     import { useUsersStore } from '@/stores/userStore';
     import { toast } from 'vue3-toastify';
+    import { useI18n } from 'vue-i18n'
 
+
+    const { t } = useI18n()
     const store = useUsersStore();
   
     // Datos del cliente se traen del store
@@ -76,7 +79,7 @@
             const isRegisteredByAnother = store.users.some(u => u.email === emailForm.value && u.id !== store.loggedUser?.id)
 
             if(isRegisteredByAnother) {
-                toast("Este correo ya está registrado", {
+                toast(t('duplicated'), {
                     type: "error",
                     onClose: () => {
                         emailForm.value = store.loggedUser?.email;
@@ -87,7 +90,7 @@
 
             await store.modifyUser(store.loggedUser?.id, emailForm.value, passwordForm.value);
             console.log('Usuario modificado correctamente')
-            toast("Usuario modificado correctamente", {
+            toast(t('okModified'), {
                 type: "success",
             });
 

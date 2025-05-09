@@ -1,4 +1,5 @@
 
+import { OperationCanceledException } from 'typescript'
 import { createI18n } from 'vue-i18n'
 
 
@@ -44,6 +45,12 @@ const messages = {
         okLogin: 'Inicio de sesión correcto',
         koLogin: 'Usuario o contraseña incorrectos',
         errorLogin: 'Error al intentar iniciar sesión',
+        duplicated: 'Este correo ya está registrado',
+        resume: 'Resumen de la reserva',
+        cancel: 'Cancelar',
+        saveChanges: 'Guardar cambios',
+        userData: 'Datos personales',
+        okModified: 'Usuario modificado correctamente'
     }
     ,
     en: {
@@ -85,6 +92,12 @@ const messages = {
         okLogin: 'Login successful',
         koLogin: 'Incorrect username or password',
         errorLogin: 'Error trying to log in',
+        duplicated: 'This email is already registered',
+        resume: 'Reservation summary',
+        cancel: 'Cancel',
+        saveChanges: 'Save changes',
+        userData: 'Personal data',
+        okModified: 'User modified successfully'
     },
         it: {
         hello: 'hello world',
@@ -125,6 +138,12 @@ const messages = {
         okLogin: 'Accesso riuscito',
         koLogin: 'Nome utente o password errati',
         errorLogin: 'Errore durante il tentativo di accesso',
+        duplicated: 'Questa email è già registrata',
+        resume: 'Riepilogo della prenotazione',
+        cancel: 'Annulla',
+        saveChanges: 'Salva le modifiche',
+        userData: 'Dati personali',
+        okModified: 'Utente modificato con successo'
     },
 
 }

@@ -4,15 +4,15 @@
         
         <v-col cols="12" md="6" >
           <v-card-title class="text-h6 text-center text-md-left">
-            Resumen de la reserva
+            {{ t('resume') }}
           </v-card-title>
   
           <v-list dense class="text-center text-md-left">
             <v-list-item>
                 <v-list-item-title>{{ selectedCourtObject?.name }} </v-list-item-title>
-                <v-list-item-title>Fecha: {{ dateFormatted }} </v-list-item-title>
-                <v-list-item-title>Hora inicio: {{ initialHourFormatted }} </v-list-item-title>
-                <v-list-item-title>Fecha fin: {{ endHourFormatted }} </v-list-item-title>               
+                <v-list-item-title>{{ t('date') }}: {{ dateFormatted }} </v-list-item-title>
+                <v-list-item-title>{{ t('startTime') }}: {{ initialHourFormatted }} </v-list-item-title>
+                <v-list-item-title>{{ t('endTime') }}: {{ endHourFormatted }} </v-list-item-title>               
             </v-list-item>
           </v-list>
   
@@ -30,13 +30,13 @@
                     class="mr-2"
                     @click="cancel"
                 >
-                    Cancelar
+                  {{ t('cancel') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="confirm"
                 >
-                    Confirmar
+                  {{ t('confirm') }}
                 </v-btn>
                 
             </v-row>
@@ -52,7 +52,10 @@
   
   import type { Court } from '@/types/court';
   import { formatReservationDates } from '@/utils/dateFormatter';
+  import { useI18n } from 'vue-i18n'
 
+
+  const { t } = useI18n()
   //Propiedades recibidas del padre
   const { dateSelected, endDate, courtSelected, selectedCourtObject } = defineProps<{
       dateSelected: Date,
