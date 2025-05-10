@@ -9,7 +9,7 @@
         :max-time="{ hours: 22, minutes: 30 }" 
         hours-increment="1" 
         minutes-increment="30" 
-        auto-position="bottom"  
+        auto-position="top"  
         :placeholder="t('askData')"
         :min-date="new Date()"
         :max-date="maxDate"
@@ -39,12 +39,15 @@
   //evento seleccion fecha al padre
   const emit  = defineEmits<{
     (e: 'dateSelected', value: Date): void;
+    (e: 'resetCourt') : void;
   }>();
 
   function emitDate(value: Date) {
     console.log('Emite fecha el hijo')
-    emit('dateSelected', value)
+    emit('dateSelected', value);
+    emit('resetCourt');
   }
+
 
 
 </script>

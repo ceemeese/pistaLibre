@@ -52,6 +52,7 @@
   
   import type { Court } from '@/types/court';
   import { formatReservationDates } from '@/utils/dateFormatter';
+  import { computed } from 'vue';
   import { useI18n } from 'vue-i18n'
 
 
@@ -64,7 +65,7 @@
       selectedCourtObject: Court | null
   }>()
   
-  const { dateFormatted, initialHourFormatted, endHourFormatted } = formatReservationDates(dateSelected, endDate);
+  const { dateFormatted, initialHourFormatted, endHourFormatted } = computed(() => formatReservationDates(dateSelected, endDate)).value;
 
   //Eventos emitidos al padre
   const emit = defineEmits(['confirmReservation', 'cancelReservation'])

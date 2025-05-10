@@ -1,18 +1,27 @@
 <template>
-    <Banner />
+    <Banner 
+      @scroll-to-datepicker="scrollToDatepicker"
+      />
     <v-container v-if="userStore.isAuthenticated">
-      <Datepicker 
-        ref="datepickerRef" 
-        @date-selected="onDateSelected" 
-      />
+      <section ref="my-datepicker" >
+        <Datepicker 
+          @date-selected="onDateSelected" 
+          @resetCourt="resetCourtSelected"
+          @scroll-to-list="scrollToList"
+        />
+      </section>
 
-      <ListCourt 
-        v-if="dateSelected"
-        :dateSelected="dateSelected"
-        :endDate="endDate"
-        @court-selected="onCourtSelected"
-      />
+      <section ref="my-list" >
+        <ListCourt 
+          ref="listCourtRef"
+          v-if="dateSelected"
+          :dateSelected="dateSelected"
+          :endDate="endDate"
+          @court-selected="onCourtSelected"
+        />
+      </section>
       
+      <section ref="my-resume">
       <Resume
         v-if="dateSelected && courtSelected && endDate"
         :dateSelected="dateSelected"
@@ -22,12 +31,13 @@
         @confirm-reservation="confirmReservation"
         @cancel-reservation="cancelReservation"
       />
+      </section>
     </v-container>
 </template>
 
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+  import { ref, computed, useTemplateRef } from 'vue'
   import Banner from '../components/AppBanner.vue'
   import Datepicker from '@/components/AppDatepicker.vue';
   import ListCourt from '@/components/AppListCourt.vue';
@@ -40,6 +50,7 @@
   import { useReservationsStore } from '@/stores/reservationStore';
   import { toast } from 'vue3-toastify';
   import { useI18n } from 'vue-i18n'
+  import { nextTick } from 'vue';
 
 
 
@@ -49,7 +60,12 @@
   const reservationStore = useReservationsStore();
   const { t } = useI18n() 
 
-  //const datepickerRef = ref<HTMLElement | null>(null);
+  const datepicker = useTemplateRef('my-datepicker');
+  const mylist = useTemplateRef('my-list');
+  const resume = useTemplateRef('my-resume');
+  
+  const listCourtRef = ref();
+  
   const dateSelected = ref<Date| null>(null);
   const courtSelected = ref<number | null>(null);
   const endDate = ref<Date | null>(null);
@@ -61,11 +77,13 @@
 
     //calcular la fecha final tras coger fecha inicio
     addReservationTime();
+    scrollToList();
   }
 
   const onCourtSelected = (courtId: number ) => {
     console.log('Pista recibida de componente hijo ListCourt:', courtId);
     courtSelected.value = courtId;
+    scrollToResume()
   }
 
   //Objeto entero para poder mostrar info
@@ -75,6 +93,10 @@
     return court ?? null;
   })
 
+
+  function resetCourtSelected() {
+    courtSelected.value = null; 
+  }
 
 
   //Evento confirmar reserva del Resume
@@ -94,6 +116,7 @@
       const result: ReservationResult = await reservationStore.addReservation(newReservation);
 
       toast(t(result.message), {type: result.success ? 'success' : 'error',});
+      cancelReservation();
 
     } else {
       console.log("Alguno de los campos está vacío");
@@ -116,5 +139,25 @@
     }
   }
 
+
+
+  //Scrolls
+  function scrollToDatepicker() {
+    nextTick(() => {
+    datepicker.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    });
+  }
+
+  function scrollToList() {
+    nextTick(() => {
+      mylist.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function scrollToResume() {
+    nextTick(() => {
+      resume.value?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
 
 </script>

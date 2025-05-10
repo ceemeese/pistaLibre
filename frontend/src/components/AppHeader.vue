@@ -11,7 +11,7 @@
       PistaLibreApp
     </v-app-bar-title>
 
-    <v-spacer />
+    <v-spacer class="d-none d-sm-block" />
 
     <!-- Menú escritorio -->
     <div class="d-none d-sm-flex justify-center align-center">
@@ -152,6 +152,6 @@
 <style scoped>
 
   .select-idiom{
-    max-width: 75px;
+    max-width: 80px;
   }
 </style>

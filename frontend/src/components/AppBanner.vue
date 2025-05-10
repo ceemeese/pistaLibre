@@ -38,7 +38,7 @@
   }
   
   .banner-img {
-    height: 250px;
+    height: 100vh;
   }
   
   .banner-overlay {

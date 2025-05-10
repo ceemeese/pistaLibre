@@ -42,6 +42,7 @@
   const { t } = useI18n()
   const courtsStore = useCourtsStore();
   const reservationsStore = useReservationsStore();
+  
 
   console.log('Numero de courts desde store:', courtsStore.courts);
   
@@ -57,6 +58,7 @@
   //Evento seleccion pista al padre
   const emit = defineEmits<{
     (e: 'courtSelected', courId : number ): void
+    
   }>()
 
   function selectCourt(courtId : number) {
