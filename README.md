@@ -32,7 +32,7 @@ Incluye funcionalidades para usuarios administradores y clientes, con un diseño
 
 1. **Clona el repositorio**:
     ```bash
-    git clone https://github.com/usuario/pista-manager.git
+    git clone https://github.com/ceemeese/pistaLibre.git
     ```
 
 2. **Instala dependencias de frontend e inicia el servidor**:
