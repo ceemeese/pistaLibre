@@ -9,7 +9,7 @@
     <Header />
 
     <v-main class="flex-grow-1 d-flex flex-column fill-height">
-      <RouterView />
+      <RouterView class="vh100" />
     </v-main>
 
     <Footer class="shrink-0"/>
