@@ -1,0 +1,15 @@
+# .gitignore
+
+# Node
+node_modules/
+dist/
+.env
+
+# macOS
+.DS_Store
+
+# Logs
+npm-debug.log*
+
+# Editor config
+.vscode/
